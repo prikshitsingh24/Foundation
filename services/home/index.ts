@@ -17,7 +17,7 @@ export async function fetchAdminRole(){
 
 export async function registerAdmin(details:any){
     try{
-        await prisma.employee.create({
+        const admin = await prisma.employee.create({
             data:{
                 name: details.name,
                 email: details.email,
@@ -25,8 +25,10 @@ export async function registerAdmin(details:any){
                 role: "ADMIN"
             }
         })
-        console.log("Data added successfully!")
-        return 0;
+        if(admin){
+            return admin.employeeId;
+        }
+        return -1;
     }catch(error){
         console.log(error);
     }
@@ -35,14 +37,17 @@ export async function registerAdmin(details:any){
 export async function login(details:any){
 
     try{
-        const isEmployee = await prisma.employee.findMany({
+        const employee = await prisma.employee.findMany({
             where:{
                 name: details.name,
                 email: details.email,
                 password: details.password
             }
         })
-        return isEmployee;
+        if(employee.length!=0){
+            return employee[0].employeeId;
+        }
+        return -1;
     }catch(error){
         console.log(error);
     }
