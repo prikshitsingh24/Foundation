@@ -18,9 +18,11 @@ export default {
       },
       colors: {
         bgWhite     : "#FFFFFF",
-        bgGray      : "#525252",
+        bgGray      : "#D0D0D0",
+        bgLightGray : "#F0F0F0",
         btnBlack    : "#171717",
-        textBlack   : "#000000"
+        textBlack   : "#000000",
+        textWhite   : "#FFFFFF"
       }
     },
   },
