@@ -28,7 +28,7 @@ export default function Dashboard(){
                         
                     </div>
 
-                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[850px] ">
+                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[870px] ">
                         <div>
                             <div className="pb-5 text-2xl font-bold">
                                 Home
@@ -37,7 +37,7 @@ export default function Dashboard(){
                                 <Navbar employeeId={details.employeeId}></Navbar>
                             </div>
                         </div>
-                        <div className="flex p-2 mt-12 border-2 border-bgLightGray rounded-md h-full">
+                        <div className="flex p-2 mt-12 border-2 border-bgLightGray rounded-md h-full overflow-y-scroll">
                            <Outlet/>
                         </div>
                     </div>

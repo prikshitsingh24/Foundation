@@ -22,7 +22,10 @@ export default {
         bgLightGray : "#F0F0F0",
         btnBlack    : "#171717",
         textBlack   : "#000000",
-        textWhite   : "#FFFFFF"
+        textWhite   : "#FFFFFF",
+        'scrollbar-thumb': '#888',
+        'scrollbar-thumb-hover': '#555',
+        'scrollbar-track': '#F0F0F0',
       },
       screens: {
         'screen-1280': '1280px',
