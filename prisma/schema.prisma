@@ -23,8 +23,8 @@ enum Role {
 }
 
 
-model Employee{
-  employeeId      String  @id @default(uuid())
+model User{
+  userId          String  @id @default(uuid())
   name            String
   email           String
   password        String

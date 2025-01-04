@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
-import { fetchEmployeeDetails } from "services/home";
+import { fetchuserDetails } from "services/home";
 
 
 
@@ -28,16 +28,16 @@ export default function Dashboard(){
                         
                     </div>
 
-                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[870px] ">
+                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[890px] ">
                         <div>
                             <div className="pb-5 text-2xl font-bold">
                                 Home
                             </div>
                             <div>
-                                <Navbar employeeId={details.employeeId}></Navbar>
+                                <Navbar userId={details.userId}></Navbar>
                             </div>
                         </div>
-                        <div className="flex p-2 mt-12 border-2 border-bgLightGray rounded-md h-full overflow-y-scroll">
+                        <div className="flex p-2 border-2 border-bgLightGray rounded-lg h-full overflow-y-scroll">
                            <Outlet/>
                         </div>
                     </div>
@@ -52,9 +52,9 @@ export default function Dashboard(){
 }
 
 export async function loader({params}: LoaderFunctionArgs){
-    const employeeId = await params.employeeId;
-    if(employeeId){
-        return fetchEmployeeDetails(employeeId);
+    const userId = await params.userId;
+    if(userId){
+        return fetchuserDetails(userId);
     }else{
         return redirect("/");
     }

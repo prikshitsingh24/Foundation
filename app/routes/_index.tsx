@@ -55,19 +55,19 @@ export async function action({request}:ActionFunctionArgs){
 
   const formData = await request.formData();
   const {_action, ...details}= Object.fromEntries(formData)
-  let employeeId;
+  let userId;
   switch(_action){
     case "login":
-      employeeId = await login(details);
-      if(employeeId != -1){
-        return redirect("/dashboard/"+employeeId+"/home");
+      userId = await login(details);
+      if(userId != -1){
+        return redirect("/dashboard/"+userId+"/home");
       }
       break;
 
     case "signup":
-      employeeId = await registerAdmin(details);
-      if(employeeId != -1){
-        return redirect("/dashboard/"+employeeId+"/home");
+      userId = await registerAdmin(details);
+      if(userId != -1){
+        return redirect("/dashboard/"+userId+"/home");
       }
       break;
   }

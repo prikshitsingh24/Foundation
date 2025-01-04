@@ -1,10 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { Details } from "type";
 
 const prisma = new PrismaClient();
 
 export async function fetchAdminRole(){
-    const isAdminRole = await prisma.employee.findMany({
+    const isAdminRole = await prisma.user.findMany({
         where:{
             role: "ADMIN"
         }
@@ -17,7 +16,7 @@ export async function fetchAdminRole(){
 
 export async function registerAdmin(details:any){
     try{
-        const admin = await prisma.employee.create({
+        const admin = await prisma.user.create({
             data:{
                 name: details.name,
                 email: details.email,
@@ -26,7 +25,7 @@ export async function registerAdmin(details:any){
             }
         })
         if(admin){
-            return admin.employeeId;
+            return admin.userId;
         }
         return -1;
     }catch(error){
@@ -37,15 +36,15 @@ export async function registerAdmin(details:any){
 export async function login(details:any){
 
     try{
-        const employee = await prisma.employee.findMany({
+        const user = await prisma.user.findMany({
             where:{
                 name: details.name,
                 email: details.email,
                 password: details.password
             }
         })
-        if(employee.length!=0){
-            return employee[0].employeeId;
+        if(user.length!=0){
+            return user[0].userId;
         }
         return -1;
     }catch(error){
@@ -54,16 +53,16 @@ export async function login(details:any){
 
 }
 
-export async function fetchEmployeeDetails(employeeId: string){
+export async function fetchuserDetails(userId: string){
     
     try{
-        const employeeDetails = await prisma.employee.findUnique({
+        const userDetails = await prisma.user.findUnique({
             where:{
-                employeeId: employeeId
+                userId: userId
             }
         })
-        if(employeeDetails){
-            return employeeDetails
+        if(userDetails){
+            return userDetails
         }
         return -1;
     }catch(error){
