@@ -19,10 +19,10 @@ export async function fetchUserById(userId: string){
     }
 }
 
-export async function fetchAllUser(){
+export async function fetchAllUsers(){
     try{
-        const allUser = await prisma.user.findMany()
-        return allUser;
+        const allUsers = await prisma.user.findMany()
+        return allUsers;
     }catch(error){
         console.log(error)
     }
