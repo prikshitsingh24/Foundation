@@ -15,7 +15,7 @@ export default function Index() {
   const isAdmin = useLoaderData<boolean>();
 
   return (
-    <div className="bg-bgLightGray text-textBlack h-screen w-full">
+    <div className="bg-bgLightGray h-screen w-full">
       <div className="bg-bgWhite fixed left-0 text-black right-0 h-12 shadow-md">
         
       </div>
@@ -60,14 +60,14 @@ export async function action({request}:ActionFunctionArgs){
     case "login":
       employeeId = await login(details);
       if(employeeId != -1){
-        return redirect("/dashboard/"+employeeId);
+        return redirect("/dashboard/"+employeeId+"/home");
       }
       break;
 
     case "signup":
       employeeId = await registerAdmin(details);
       if(employeeId != -1){
-        return redirect("/dashboard/"+employeeId);
+        return redirect("/dashboard/"+employeeId+"/home");
       }
       break;
   }
