@@ -13,6 +13,9 @@ export default function Navbar({employeeId}:{employeeId:string}){
                 <li style={{marginBottom:'10px', cursor:'pointer',borderRadius:'6px',paddingLeft:'2px',height:'25px',marginRight:'40px'}}>
                     <NavLink to={`/dashboard/${employeeId}/accounting`}>Accounting</NavLink>
                 </li>
+                <li style={{marginBottom:'10px', cursor:'pointer',borderRadius:'6px',paddingLeft:'2px',height:'25px',marginRight:'40px'}}>
+                    <NavLink to={`/dashboard/${employeeId}/users`}>Users</NavLink>
+                </li>
             </ul>
         </nav>
     )
