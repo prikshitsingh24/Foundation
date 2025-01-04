@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
-import { fetchuserDetails } from "services/home";
+import { fetchUserById } from "services/dashboard";
 
 
 
@@ -54,7 +54,7 @@ export default function Dashboard(){
 export async function loader({params}: LoaderFunctionArgs){
     const userId = await params.userId;
     if(userId){
-        return fetchuserDetails(userId);
+        return fetchUserById(userId);
     }else{
         return redirect("/");
     }
