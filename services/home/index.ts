@@ -53,3 +53,20 @@ export async function login(details:any){
     }
 
 }
+
+export async function fetchEmployeeDetails(employeeId: string){
+    
+    try{
+        const employeeDetails = await prisma.employee.findUnique({
+            where:{
+                employeeId: employeeId
+            }
+        })
+        if(employeeDetails){
+            return employeeDetails
+        }
+        return -1;
+    }catch(error){
+        console.log(error);
+    }
+}
