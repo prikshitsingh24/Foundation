@@ -53,19 +53,3 @@ export async function login(details:any){
 
 }
 
-export async function fetchuserDetails(userId: string){
-    
-    try{
-        const userDetails = await prisma.user.findUnique({
-            where:{
-                userId: userId
-            }
-        })
-        if(userDetails){
-            return userDetails
-        }
-        return -1;
-    }catch(error){
-        console.log(error);
-    }
-}

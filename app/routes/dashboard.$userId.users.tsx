@@ -1,4 +1,4 @@
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import {
     Table,
     TableHeader,
@@ -7,8 +7,12 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
+import { fetchAllUser } from "services/dashboard";
 
 export default function Users(){
+
+    const allUser = useLoaderData<any>();
+    
     return(
         <div className="w-full h-full">
             <div className="flex flex-row items-center">
@@ -47,33 +51,27 @@ export default function Users(){
                 >
                 <TableHeader>
                 <TableColumn>NAME</TableColumn>
+                <TableColumn>EMAIL</TableColumn>
                 <TableColumn>ROLE</TableColumn>
                 <TableColumn>STATUS</TableColumn>
                 </TableHeader>
                 <TableBody>
-                <TableRow key="1">
-                    <TableCell>Tony Reichert</TableCell>
-                    <TableCell>CEO</TableCell>
-                    <TableCell>Active</TableCell>
-                </TableRow>
-                <TableRow key="2">
-                    <TableCell>Zoey Lang</TableCell>
-                    <TableCell>Technical Lead</TableCell>
-                    <TableCell>Paused</TableCell>
-                </TableRow>
-                <TableRow key="3">
-                    <TableCell>Jane Fisher</TableCell>
-                    <TableCell>Senior Developer</TableCell>
-                    <TableCell>Active</TableCell>
-                </TableRow>
-                <TableRow key="4">
-                    <TableCell>William Howard</TableCell>
-                    <TableCell>Community Manager</TableCell>
-                    <TableCell>Vacation</TableCell>
-                </TableRow>
+                {allUser.map((user:any,index:number)=>(
+                    <TableRow key={index}>
+                        <TableCell>{user.name}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>{user.role}</TableCell>
+                        <TableCell>Active</TableCell>
+                    </TableRow>
+                ))}
                 </TableBody>
             </Table>
             </div>
         </div>
     )
+}
+
+export async function loader(){
+    const allUser = await fetchAllUser()
+    return allUser
 }
