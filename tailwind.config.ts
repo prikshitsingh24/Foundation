@@ -25,16 +25,10 @@ export default {
         textWhite   : "#FFFFFF"
       },
       screens: {
-        'screen-1024':'1024px',
-        // => @media (min-width: 1024px ) { ... }
         'screen-1280': '1280px',
-        // => @media (min-width: 1280px ) { ... }
+        'screen-1366': '1366px',
         'screen-1440': '1440px',
-        // => @media (min-width: 1440px ) { ... }
-        'screen-1512': '1522px',
-        // => @media (min-width: 1512px ) { ... }
-        'screen-1680':'1680px'
-      
+        'screen-1536': '1536px',
       },
     },
   },

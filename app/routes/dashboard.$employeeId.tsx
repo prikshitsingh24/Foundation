@@ -1,7 +1,6 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
-import ResponsiveDiv from "components/responsiveDiv/responsiveDiv";
 import { fetchEmployeeDetails } from "services/home";
 
 
@@ -12,7 +11,7 @@ export default function Dashboard(){
 
     return(
     
-        <div className="h-full w-full grid grid-cols-[1fr_1440px_1fr]">
+        <div className="h-screen w-full grid grid-cols-[0_1fr_0] screen-1280:grid-cols-[1fr_1280px_1fr] screen-1366:[1fr_1366px_1fr] screen-1536:[1fr_1536px_1fr] screen-1440:grid-cols-[1fr_1440px_1fr] overflow-hidden">
             <div></div>
 
                 <div className="h-full">
@@ -29,7 +28,7 @@ export default function Dashboard(){
                         
                     </div>
 
-                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-full">
+                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[850px] ">
                         <div>
                             <div className="pb-2 text-2xl font-bold">
                                 Home
@@ -38,7 +37,7 @@ export default function Dashboard(){
                                 <Navbar employeeId={details.employeeId}></Navbar>
                             </div>
                         </div>
-                        <div className="pt-2 mt-10 border-2 border-bgLightGray rounded-md h-full">
+                        <div className="flex p-2 mt-10 border-2 border-bgLightGray rounded-md h-full">
                            <Outlet/>
                         </div>
                     </div>
