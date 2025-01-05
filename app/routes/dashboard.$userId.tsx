@@ -2,6 +2,7 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
 import { fetchUserById } from "services/dashboard";
+import { User } from "type/user";
 
 
 
@@ -13,7 +14,6 @@ export default function Dashboard(){
     
         <div className="h-screen w-full grid grid-cols-[0_1fr_0] screen-1280:grid-cols-[1fr_1280px_1fr] screen-1366:[1fr_1366px_1fr] screen-1536:[1fr_1536px_1fr] screen-1440:grid-cols-[1fr_1440px_1fr] overflow-hidden">
             <div></div>
-
                 <div className="h-full">
                     <div className="bg-bgWhite fixed left-0 text-black right-0 h-12 justify-items-center shadow-md">
                         <div className="w-[1440px] flex h-full items-center justify-between">
@@ -51,15 +51,15 @@ export default function Dashboard(){
     )
 }
 
-export async function loader({params}: LoaderFunctionArgs):Promise<any>{
+export async function loader({params}: LoaderFunctionArgs):Promise<User | undefined>{
     const userId = await params.userId;
     if(userId){
         const user = await fetchUserById(userId);
         if(user != -1){
             return user;
         }
-        return redirect("/");
+        throw redirect("/");
     }else{
-        return redirect("/");
+        throw redirect("/");
     }
 }
