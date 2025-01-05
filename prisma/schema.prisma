@@ -32,12 +32,21 @@ enum Status{
 
 model User{
   userId          String  @id @default(uuid())
-  name            String
+  firstName       String?
+  middleName      String?
+  lastName        String?
+  username        String
   email           String
   status          Status
   password        String
   role            Role
-
+  gender          String?
+  phoneNumber     String?
+  mobileNumber    String?
+  dateOfBirth     String?
+  location        String?
+  interest        String?
+  bio             String?
 }
 
 

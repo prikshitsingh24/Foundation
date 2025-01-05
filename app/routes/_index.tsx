@@ -26,14 +26,14 @@ export default function Index() {
         </div>
         {isAdmin?(
           <Form method="post" className="grid grid-rows-4 gap-2 justify-items-center">
-          <input type="text" name="name" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
+          <input type="text" name="username" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <input type="email" name="email" placeholder="Email" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <input type="password" name="password" placeholder="Password" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <button name="_action" value="login" className="bg-btnBlack rounded-md w-2/5 h-10 text-textWhite">LogIn</button>
         </Form>
         ):(
           <Form method="post" className="grid grid-rows-4 gap-2 justify-items-center">
-          <input type="text" name="name" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
+          <input type="text" name="username" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <input type="email" name="email" placeholder="Email" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <input type="password" name="password" placeholder="Password" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
           <button name="_action" value="signup" className="bg-btnBlack rounded-md w-2/5 h-10 text-textWhite">SignUp</button>
