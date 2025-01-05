@@ -21,7 +21,8 @@ export async function registerAdmin(details:any){
                 name: details.name,
                 email: details.email,
                 password: details.password,
-                role: "ADMIN"
+                role: "ADMIN",
+                status:"ACTIVE"
             }
         })
         if(admin){

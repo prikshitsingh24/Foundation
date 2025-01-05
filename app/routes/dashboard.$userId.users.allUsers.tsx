@@ -71,7 +71,11 @@ export default function allUsers(){
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.role}</TableCell>
-                        <TableCell>Active</TableCell>
+                        <TableCell>
+                            <div className={`${user.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
+                                {user.status?"Active":"Inactive"}
+                            </div>
+                        </TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

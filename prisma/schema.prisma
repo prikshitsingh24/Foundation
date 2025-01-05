@@ -22,11 +22,17 @@ enum Role {
   SALES
 }
 
+enum Status{
+  ACTIVE
+  INACTIVE
+}
+
 
 model User{
   userId          String  @id @default(uuid())
   name            String
   email           String
+  status          Status
   password        String
   role            Role
 

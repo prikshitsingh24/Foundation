@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { User } from "type/user";
+
 
 const prisma = new PrismaClient();
 
@@ -19,11 +21,12 @@ export async function fetchUserById(userId: string){
     }
 }
 
-export async function fetchAllUsers(){
+export async function fetchAllUsers():Promise<User[]>{
     try{
         const allUsers = await prisma.user.findMany()
         return allUsers;
     }catch(error){
-        console.log(error)
+        console.log(error);
+        return [];
     }
 }

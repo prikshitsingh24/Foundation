@@ -51,7 +51,7 @@ export default function Dashboard(){
     )
 }
 
-export async function loader({params}: LoaderFunctionArgs){
+export async function loader({params}: LoaderFunctionArgs):Promise<any>{
     const userId = await params.userId;
     if(userId){
         const user = await fetchUserById(userId);
