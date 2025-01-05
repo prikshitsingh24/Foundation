@@ -10,7 +10,7 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
-import { fetchAllUsers, registerUser } from "services/dashboard";
+import { deleteUsersByIds, fetchAllUsers, registerUser } from "services/dashboard";
 import React from "react";
 import AddUser from "components/dashboard/addUser";
 import { User } from "type/user";
@@ -20,6 +20,9 @@ export default function AllUsers(){
 
     const allUsers = useLoaderData<any>();
     const [isAddUser,setIsAddUser] = React.useState(false);
+    const [isDelete,setIsDelete] = React.useState(true);
+    const [isUpdated,setIsUpdate] = React.useState(true);
+    const [selectedKeys,setSelectedKeys] = React.useState<any>(new Set([]));
 
     const handleAddUserClick=()=>{
         setIsAddUser(true);
@@ -35,7 +38,8 @@ export default function AllUsers(){
         if(isUserRegistered){
             setIsAddUser(false)
         }
-    },[isUserRegistered])
+    },[isUserRegistered]);
+
 
     return(
         <>
@@ -59,9 +63,12 @@ export default function AllUsers(){
                         <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
                             <img src={editIcon} width={20}/>
                         </div>
-                        <div className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <Form method="post">
+                        <input type="text" name="ids" hidden value={Array.from(selectedKeys)} />
+                        <button className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center" name="_action" value="deleteUser">
                             <img src={deleteIcon} width={20}/>
-                        </div>
+                        </button>
+                        </Form>
                         <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleAddUserClick}>
                             <img src={addIcon} width={20}/> Add user
                         </div>
@@ -74,11 +81,13 @@ export default function AllUsers(){
             ):(
                 <Table
                 removeWrapper
-                aria-label="Example static collection table"
+                aria-label="Users table"
                 selectionMode="multiple"
                   classNames={{
                     wrapper: "min-h-[650px]",
                   }}
+                  selectedKeys={selectedKeys}
+                  onSelectionChange={setSelectedKeys}
                 >
                 <TableHeader>
                 <TableColumn>NAME</TableColumn>
@@ -88,7 +97,7 @@ export default function AllUsers(){
                 </TableHeader>
                 <TableBody>
                 {allUsers.map((user:any,index:number)=>(
-                    <TableRow key={index}>
+                    <TableRow key={user.userId}>
                         <TableCell>{user.username}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.role}</TableCell>
@@ -117,13 +126,30 @@ export async function loader():Promise<User[] | []>{
 
 export async function action({request}:ActionFunctionArgs){
     const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    const isUserRegistered = await registerUser(data)
-    if(isUserRegistered != -1){
-        return 1
-    }
-    else{
-        console.log("Error!!")
+    const {_action,...data} = Object.fromEntries(formData);
+    if(_action=="addUser"){
+        const isUserRegistered = await registerUser(data)
+        if(isUserRegistered != -1){
+            return 1
+        }
+        else{
+            console.log("Error!!")
+        }
+    }else{
+        const userIds = String(data.ids).split(',');
+        console.log(userIds);
+       const isUserDeleted = await deleteUsersByIds(userIds)
+       if(!isUserDeleted){
+        console.log("Error!! not able to delete entry")
+       }
     }
     return 0;
 }
+
+
+
+
+
+
+
+

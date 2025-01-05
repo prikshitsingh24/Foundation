@@ -63,6 +63,28 @@ export async function registerUser(userData:any){
 }
 
 
+
+export async function deleteUsersByIds(ids:string[]){
+    console.log("faldsjflkadjsf",ids);
+    try{
+        const isUserDeleted = await prisma.user.deleteMany({
+            where:{
+                userId:{
+                    in:ids
+                }
+            }
+        });
+        if(isUserDeleted){
+            return isUserDeleted
+        }
+        return -1;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+
 /////////////////////////////////// Items services  /////////////////////////////////////////
 
 

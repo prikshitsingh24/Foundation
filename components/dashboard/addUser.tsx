@@ -50,7 +50,7 @@ export default function AddUser(){
                         </div>
                     </div>
                 </div>
-                <button className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
+                <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
                         Save
                 </button>
             </Form>            
