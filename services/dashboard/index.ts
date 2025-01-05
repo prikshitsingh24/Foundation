@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Item } from "type/item";
 import { User } from "type/user";
 
 
@@ -25,6 +26,23 @@ export async function fetchAllUsers():Promise<User[]>{
     try{
         const allUsers = await prisma.user.findMany()
         return allUsers;
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
+
+
+
+
+/////////////////////////////////// Items services  /////////////////////////////////////////
+
+
+
+export async function fetchAllItems():Promise<Item[]>{
+    try{
+        const items = await prisma.item.findMany();
+        return items;
     }catch(error){
         console.log(error);
         return [];

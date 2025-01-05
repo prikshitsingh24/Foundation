@@ -8,28 +8,29 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
-import { fetchAllUsers } from "services/dashboard";
 import React from "react";
 import AddUser from "components/dashboard/addUser";
-import { User } from "type/user";
+import { Item } from "type/item";
+import { fetchAllItems } from "services/dashboard";
+import AddItem from "components/dashboard/addItem";
 
-export default function AllUsers(){
+export default function Items(){
 
-    const allUsers = useLoaderData<any>();
-    const [isAddUser,setIsAddUser] = React.useState(false);
+    const allItems = useLoaderData<any>();
+    const [isAddItem,setIsAddItem] = React.useState(false);
 
     const handleAddUserClick=()=>{
-        setIsAddUser(true);
+        setIsAddItem(true);
     }
 
     const handleViewUserClick=()=>{
-        setIsAddUser(false);
+        setIsAddItem(false);
     }
 
     return(
         <>
             <div className="mt-5 flex flex-row justify-between items-center">
-                {isAddUser?(
+                {isAddItem?(
                     <div></div>
                 ):(
                     <Form className="flex flex-row">
@@ -39,19 +40,19 @@ export default function AllUsers(){
                     <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 outline-none" placeholder="Roles" />
                 </Form>
                 )}
-                  {isAddUser?(
+                  {isAddItem?(
                       <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleViewUserClick}>
-                        View users
+                        View items
                   </div>
                   ):(
                     <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleAddUserClick}>
-                    <img src={addIcon} width={20}/> Add user
+                    <img src={addIcon} width={20}/> Add Item
                 </div>
                   )}
             </div>
             <div className="flex flex-col gap-3 mt-5">
-            {isAddUser?(
-                <AddUser/>
+            {isAddItem?(
+                <AddItem/>
             ):(
                 <Table
                 removeWrapper
@@ -63,19 +64,19 @@ export default function AllUsers(){
                 >
                 <TableHeader>
                 <TableColumn>NAME</TableColumn>
-                <TableColumn>EMAIL</TableColumn>
-                <TableColumn>ROLE</TableColumn>
+                <TableColumn>Item Group</TableColumn>
+                <TableColumn>ID</TableColumn>
                 <TableColumn>STATUS</TableColumn>
                 </TableHeader>
                 <TableBody>
-                {allUsers.map((user:any,index:number)=>(
+                {allItems.map((item:any,index:number)=>(
                     <TableRow key={index}>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.role}</TableCell>
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell>{item.itemGroup}</TableCell>
+                        <TableCell>{item.ID}</TableCell>
                         <TableCell>
-                            <div className={`${user.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
-                                {user.status?"Active":"Inactive"}
+                            <div className={`${item.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
+                                {item.status?"Enabled":"Disabled"}
                             </div>
                         </TableCell>
                     </TableRow>
@@ -88,10 +89,10 @@ export default function AllUsers(){
     )
 }
 
-export async function loader():Promise<User[] | []>{
-    const allUser = await fetchAllUsers();
-    if(allUser?.length!=0){
-        return allUser;
+export async function loader():Promise<Item[] | []>{
+    const allItems = await fetchAllItems();
+    if(allItems?.length!=0){
+        return allItems;
     }
     return [];
 }

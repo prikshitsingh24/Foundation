@@ -1,9 +1,9 @@
 
-export default function AddUser(){
+export default function AddItem(){
     
     return(
         <div className="w-full h-full">
-            Hi
+            Hi 21
         </div>
     )
 }
