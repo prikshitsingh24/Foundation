@@ -1,5 +1,7 @@
-import { Form, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Form, NavLink, Outlet, redirect, useActionData, useLoaderData } from "@remix-run/react";
 import addIcon from "/addIcon.png";
+import editIcon from "/editIcon.png";
+import deleteIcon from "/deleteIcon.png";
 import {
     Table,
     TableHeader,
@@ -8,10 +10,11 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
-import { fetchAllUsers } from "services/dashboard";
+import { fetchAllUsers, registerUser } from "services/dashboard";
 import React from "react";
 import AddUser from "components/dashboard/addUser";
 import { User } from "type/user";
+import { ActionFunctionArgs } from "@remix-run/node";
 
 export default function AllUsers(){
 
@@ -25,6 +28,14 @@ export default function AllUsers(){
     const handleViewUserClick=()=>{
         setIsAddUser(false);
     }
+
+    const isUserRegistered = useActionData<any>();
+
+    React.useEffect(()=>{
+        if(isUserRegistered){
+            setIsAddUser(false)
+        }
+    },[isUserRegistered])
 
     return(
         <>
@@ -40,13 +51,21 @@ export default function AllUsers(){
                 </Form>
                 )}
                   {isAddUser?(
-                      <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleViewUserClick}>
+                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleViewUserClick}>
                         View users
-                  </div>
+                    </div>
                   ):(
-                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleAddUserClick}>
-                    <img src={addIcon} width={20}/> Add user
-                </div>
+                    <div className="flex flex-row gap-3">
+                        <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={editIcon} width={20}/>
+                        </div>
+                        <div className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={deleteIcon} width={20}/>
+                        </div>
+                        <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" onClick={handleAddUserClick}>
+                            <img src={addIcon} width={20}/> Add user
+                        </div>
+                    </div>
                   )}
             </div>
             <div className="flex flex-col gap-3 mt-5">
@@ -70,7 +89,7 @@ export default function AllUsers(){
                 <TableBody>
                 {allUsers.map((user:any,index:number)=>(
                     <TableRow key={index}>
-                        <TableCell>{user.name}</TableCell>
+                        <TableCell>{user.username}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.role}</TableCell>
                         <TableCell>
@@ -94,4 +113,17 @@ export async function loader():Promise<User[] | []>{
         return allUser;
     }
     return [];
+}
+
+export async function action({request}:ActionFunctionArgs){
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    const isUserRegistered = await registerUser(data)
+    if(isUserRegistered != -1){
+        return 1
+    }
+    else{
+        console.log("Error!!")
+    }
+    return 0;
 }

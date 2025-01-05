@@ -18,7 +18,7 @@ export async function registerAdmin(details:any){
     try{
         const admin = await prisma.user.create({
             data:{
-                name: details.name,
+                username: details.username,
                 email: details.email,
                 password: details.password,
                 role: "ADMIN",
@@ -39,7 +39,7 @@ export async function login(details:any){
     try{
         const user = await prisma.user.findMany({
             where:{
-                name: details.name,
+                username: details.username,
                 email: details.email,
                 password: details.password
             }

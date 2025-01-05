@@ -22,7 +22,7 @@ export async function fetchUserById(userId: string){
     }
 }
 
-export async function fetchAllUsers():Promise<User[]>{
+export async function fetchAllUsers():Promise<any>{
     try{
         const allUsers = await prisma.user.findMany()
         return allUsers;
@@ -32,7 +32,35 @@ export async function fetchAllUsers():Promise<User[]>{
     }
 }
 
-
+export async function registerUser(userData:any){
+    try{
+        const registeredUser = await prisma.user.create({
+            data: {
+                firstName:      userData.firstName, 
+                middleName:     userData.middleName,    
+                lastName:       userData.lastName,      
+                username:       userData.username,      
+                email:          userData.email,         
+                password:       userData.password,      
+                role:           userData.role,
+                status:         "ACTIVE", 
+                gender:         userData.gender,
+                phoneNumber:    userData.phoneNumber,
+                mobileNumber:   userData.mobileNumber,
+                dateOfBirth:    userData.dateOfBirth,
+                location:       userData.location,
+                interest:       userData.interest,
+                bio:            userData.bio,
+            }
+        })
+        if(registeredUser){
+            return 1;
+        }
+        return -1;
+    }catch(error){
+        console.log(error)
+    }
+}
 
 
 /////////////////////////////////// Items services  /////////////////////////////////////////
