@@ -36,6 +36,7 @@ export default {
         'screen-1366': '1366px',
         'screen-1440': '1440px',
         'screen-1536': '1536px',
+        'screen-1920': '1920px'
       },
     },
   },

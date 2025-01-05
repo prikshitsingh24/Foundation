@@ -28,7 +28,7 @@ export default function Dashboard(){
                         
                     </div>
 
-                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[890px] ">
+                    <div className="pt-20 grid grid-cols-[1fr_6fr] h-[700px] screen-1080:h-[890px] ">
                         <div>
                             <div className="pb-5 text-2xl font-bold">
                                 Home
@@ -54,7 +54,11 @@ export default function Dashboard(){
 export async function loader({params}: LoaderFunctionArgs){
     const userId = await params.userId;
     if(userId){
-        return fetchUserById(userId);
+        const user = await fetchUserById(userId);
+        if(user != -1){
+            return user;
+        }
+        return redirect("/");
     }else{
         return redirect("/");
     }
