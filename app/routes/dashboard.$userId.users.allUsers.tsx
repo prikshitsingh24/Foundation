@@ -11,6 +11,7 @@ import {
 import { fetchAllUsers } from "services/dashboard";
 import React from "react";
 import AddUser from "components/dashboard/addUser";
+import { User } from "type/user";
 export default function allUsers(){
 
     const allUsers = useLoaderData<any>();
@@ -86,7 +87,7 @@ export default function allUsers(){
     )
 }
 
-export async function loader(){
+export async function loader():Promise<User[] | []>{
     const allUser = await fetchAllUsers();
     if(allUser?.length!=0){
         return allUser;
