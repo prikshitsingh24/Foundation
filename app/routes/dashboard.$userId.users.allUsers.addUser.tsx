@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, redirect, replace, useActionData, useLoaderData } from "@remix-run/react";
 import React from "react";
@@ -15,12 +15,12 @@ export default function AddUser(){
             <Form method="post" className="w-full h-full mt-5">
                 <div>
                     Basic Info
-                    <div className="flex flex-row mt-5 gap-3">
+                    <div className="flex flex-row gap-3">
                         <Input type="text" name="firstName" labelPlacement="outside" variant="faded" label="First Name" />
                         <Input type="text" name="middleName" labelPlacement="outside" variant="faded"  label="Middle Name"  />
                         <Input type="text" name="lastName" labelPlacement="outside" variant="faded" label="Last Name"  />
                     </div>
-                    <div className="flex flex-row mt-5 gap-3">
+                    <div className="flex flex-row mt-4 gap-3">
                         <Input type="text" name="username" labelPlacement="outside" variant="faded"   label="Username" />
                         <Input type="email" name="email" labelPlacement="outside"  variant="faded"  label="Email"/>
                         <Input type="password" name="password" labelPlacement="outside" variant="faded"  label="Password" />
@@ -30,7 +30,7 @@ export default function AddUser(){
                 <div className="flex flex-col pt-10">
                         Roles & Permissions
                         <div className="w-full">
-                            <select name="role" className="bg-bgLightGray rounded-md w-5/12 h-8 mt-5 pl-3 pr-10 outline-none">
+                            <select name="role" className="bg-bgLightGray border-2 border-borderGray hover:border-borderHoverGray  rounded-xl w-5/12 h-10 mt-5 pl-3 pr-10 outline-none">
                             {roles.map((role:any)=>(
                                     <option value={role.roleId}>{role.role}</option>
                             ))}
@@ -40,8 +40,8 @@ export default function AddUser(){
                 <div className="flex flex-col pt-10 mt-5">
                     More Information
                     <div className="w-full">
-                        <div className="flex flex-row mt-5 gap-3">
-                            <select name="gender" className="bg-bgLightGray rounded-lg mt-6 w-full h-10 pl-3 pr-10 outline-none">
+                        <div className="flex flex-row gap-3">
+                            <select name="gender" className="bg-bgLightGray  border-2 border-borderGray hover:border-borderHoverGray  rounded-xl mt-6 w-full h-10 pl-3 pr-10 outline-none">
                                 <option value="">Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -49,18 +49,36 @@ export default function AddUser(){
                             <Input type="number" name="phoneNumber" label="Phone number" variant="faded"   labelPlacement="outside" />
                             <Input type="number" name="mobileNumber" label="Mobile Number"  variant="faded"   labelPlacement="outside" />
                         </div>
-                        <div className="flex flex-row mt-5 gap-3">
+                        <div className="flex flex-row mt-4 gap-3">
                             <Input type="text" name="dateOfBirth" label="Date of Birth"   variant="faded"   labelPlacement="outside" />
                             <Input type="text" name="location" label="Location"   variant="faded"   labelPlacement="outside"/>
                         </div>
-                        <div className="flex flex-row mt-5 gap-3">
-                            <Input type="text" name="interest" label="Interest"   variant="faded"   labelPlacement="outside" />
-                            <Input type="text" name="bio" label="Bio"   variant="faded"   labelPlacement="outside" />
+                        <div className="flex flex-row mt-10 gap-3">
+                            <Textarea
+                                disableAnimation
+                                disableAutosize
+                                classNames={{
+                                    base: "max-w-xs",
+                                    input: "resize-y min-h-[40px]",
+                                }}
+                                label="Interest"
+                                variant="faded"
+                                />
+                            <Textarea
+                                disableAnimation
+                                disableAutosize
+                                classNames={{
+                                    base: "max-w-xs",
+                                    input: "resize-y min-h-[40px]",
+                                }}
+                                label="Bio"
+                                variant="faded"
+                                />
                         </div>
                     </div>
                 </div>
                 <input type="text" hidden value={id} name="userId" />
-                <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
+                <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-10 cursor-pointer flex justify-evenly items-center w-16">
                         Save
                 </button>
             </Form>            

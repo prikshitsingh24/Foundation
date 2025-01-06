@@ -27,6 +27,8 @@ export default {
         btnBlack    : "#171717",
         textBlack   : "#000000",
         textWhite   : "#FFFFFF",
+        borderGray  : "#e5e7eb",
+        borderHoverGray: "#9ca3af",
         'scrollbar-thumb': '#888',
         'scrollbar-thumb-hover': '#555',
         'scrollbar-track': '#F0F0F0',
