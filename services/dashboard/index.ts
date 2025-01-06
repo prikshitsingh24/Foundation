@@ -85,6 +85,40 @@ export async function deleteUsersByIds(ids:string[]){
 }
 
 
+export async function updateUserById(updateData:any,id:string){
+    try{
+        const isUserUpdated = await prisma.user.update({
+            where:{
+                userId: id
+            },
+            data:{
+                firstName:      updateData.firstName, 
+                middleName:     updateData.middleName,
+                lastName:       updateData.lastName,
+                username:       updateData.username,
+                email:          updateData.email,
+                password:       updateData.password,
+                role:           updateData.role,
+                status:         "ACTIVE", 
+                gender:         updateData.gender,
+                phoneNumber:    updateData.phoneNumber,
+                mobileNumber:   updateData.mobileNumber,
+                dateOfBirth:    updateData.dateOfBirth,
+                location:       updateData.location,
+                interest:       updateData.interest,
+                bio:            updateData.bio,
+            }
+        })
+        if(isUserUpdated){
+            return 1
+        }
+        return -1
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
 
 /////////////////////////////////// Items services  /////////////////////////////////////////
 

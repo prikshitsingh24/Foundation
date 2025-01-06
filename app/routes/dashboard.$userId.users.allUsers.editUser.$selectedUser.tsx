@@ -1,10 +1,13 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
-import { fetchUserById } from "services/dashboard";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { Form, redirect, useLoaderData } from "@remix-run/react";
+import { useRecoilState } from "recoil";
+import { fetchUserById, updateUserById } from "services/dashboard";
+import { userIdState } from "state/userState";
 
 
 export default function EditUser(){
     const userDetails = useLoaderData<any>();
+    const [id,setId] = useRecoilState(userIdState);
         return(
             <div className="w-full h-full">
             <Form method="post" className="w-full h-full mt-5">
@@ -53,6 +56,7 @@ export default function EditUser(){
                         </div>
                     </div>
                 </div>
+                <input type="text" name="userId" value={id} hidden />
                 <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
                        update
                 </button>
@@ -69,4 +73,15 @@ export async function loader({params}:LoaderFunctionArgs){
         return selectedUserDetail;
     }
 
+}
+
+export async function action({request,params}:ActionFunctionArgs){
+    const formData = await request.formData();
+    const id = await params.selectedUser;
+    if(id){
+        const updateUser =  await updateUserById(Object.fromEntries(formData),id);
+        console.log(updateUser)
+        return redirect(`/dashboard/${Object.fromEntries(formData).userId}/users/allUsers/table`)
+    }
+    return 0;
 }

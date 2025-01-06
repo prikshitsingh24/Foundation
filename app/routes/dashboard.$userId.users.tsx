@@ -61,32 +61,34 @@ export default function Users(){
                         Permission manager
                     </div>
                 </div>
-                <div className="flex flex-row gap-3">
-                        {selectedKeys.size===1?(
-                            <NavLink to={`allUsers/editUser/${String(Array.from(selectedKeys))}`}>
-                            <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
-                                <img src={editIcon} width={20}/>
-                            </div>
-                            </NavLink>
-                        ):(
+                {isUserSelected && (
+                    <div className="flex flex-row gap-3">
+                    {selectedKeys.size===1?(
+                        <NavLink to={`allUsers/editUser/${String(Array.from(selectedKeys))}`}>
                         <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
                             <img src={editIcon} width={20}/>
                         </div>
-                        
-                        )}
-                        <Form method="post">
-                        <input type="text" hidden value={id} name="userId" />
-                        <input type="text" name="ids" hidden value={Array.from(selectedKeys)} />
-                        <button className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
-                            <img src={deleteIcon} width={20}/>
-                        </button>
-                        </Form>
-                       <NavLink to="allUsers/addUser">
-                       <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" >
-                            <img src={addIcon} width={20}/> Add user
-                        </div>
-                       </NavLink>
-                    </div>                
+                        </NavLink>
+                    ):(
+                    <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={editIcon} width={20}/>
+                    </div>
+                    
+                    )}
+                    <Form method="post">
+                    <input type="text" hidden value={id} name="userId" />
+                    <input type="text" name="ids" hidden value={Array.from(selectedKeys)} />
+                    <button className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={deleteIcon} width={20}/>
+                    </button>
+                    </Form>
+                   <NavLink to="allUsers/addUser">
+                   <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" >
+                        <img src={addIcon} width={20}/> Add user
+                    </div>
+                   </NavLink>
+                    </div> 
+                )}               
             </div>
             <Outlet/>
         </div>
