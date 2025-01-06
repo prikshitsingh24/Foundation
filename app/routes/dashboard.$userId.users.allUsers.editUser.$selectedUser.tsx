@@ -7,7 +7,7 @@ export default function EditUser(){
     const userDetails = useLoaderData<any>();
         return(
             <div className="w-full h-full">
-            <Form method="post" className="w-full h-full">
+            <Form method="post" className="w-full h-full mt-5">
                 <div>
                     Basic Info
                     <div className="flex flex-row mt-5 gap-3">
@@ -48,8 +48,8 @@ export default function EditUser(){
                             <input type="text" defaultValue={userDetails.location} name="location" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Location" />
                         </div>
                         <div className="flex flex-row mt-5 gap-3">
-                            <input type="text" defaultValue={userDetails.interest} name="interest" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Interest" />
-                            <input type="text" defaultValue={userDetails.bio} name="bio" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Bio" />
+                            <input type="text" defaultValue={userDetails.interest} name="interest" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Interest" />
+                            <input type="text" defaultValue={userDetails.bio} name="bio" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Bio" />
                         </div>
                     </div>
                 </div>
