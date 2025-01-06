@@ -1,13 +1,14 @@
+import { Input } from "@nextui-org/input";
 import { ActionFunctionArgs } from "@remix-run/node";
-import { Form, redirect, replace, useActionData } from "@remix-run/react";
+import { Form, redirect, replace, useActionData, useLoaderData } from "@remix-run/react";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { deleteUsersByIds, registerUser } from "services/dashboard";
+import { deleteUsersByIds, fetchAllRoles, registerUser } from "services/dashboard";
 import { isAddUserState, isEditUserState, userIdState } from "state/userState";
 
 export default function AddUser(){
     const [id,setId] = useRecoilState(userIdState);
-    
+    const roles:any = useLoaderData();
 
     return(
         <div className="w-full h-full">
@@ -15,14 +16,14 @@ export default function AddUser(){
                 <div>
                     Basic Info
                     <div className="flex flex-row mt-5 gap-3">
-                        <input type="text" name="firstName" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="First Name" />
-                        <input type="text" name="middleName" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Middle Name" />
-                        <input type="text" name="lastName" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Last Name" />
+                        <Input type="text" name="firstName" labelPlacement="outside" variant="faded" label="First Name" />
+                        <Input type="text" name="middleName" labelPlacement="outside" variant="faded"  label="Middle Name"  />
+                        <Input type="text" name="lastName" labelPlacement="outside" variant="faded" label="Last Name"  />
                     </div>
                     <div className="flex flex-row mt-5 gap-3">
-                        <input type="text" name="username" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Username" />
-                        <input type="email" name="email" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Email" />
-                        <input type="password" name="password" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Password" />
+                        <Input type="text" name="username" labelPlacement="outside" variant="faded"   label="Username" />
+                        <Input type="email" name="email" labelPlacement="outside"  variant="faded"  label="Email"/>
+                        <Input type="password" name="password" labelPlacement="outside" variant="faded"  label="Password" />
                     </div>
                 </div>
                 <br />
@@ -30,8 +31,9 @@ export default function AddUser(){
                         Roles & Permissions
                         <div className="w-full">
                             <select name="role" className="bg-bgLightGray rounded-md w-5/12 h-8 mt-5 pl-3 pr-10 outline-none">
-                                <option value="">Select Role</option>
-                                <option value="ADMIN">Admin</option>
+                            {roles.map((role:any)=>(
+                                    <option value={role.roleId}>{role.role}</option>
+                            ))}
                             </select>
                         </div>
                 </div>
@@ -39,21 +41,21 @@ export default function AddUser(){
                     More Information
                     <div className="w-full">
                         <div className="flex flex-row mt-5 gap-3">
-                            <select name="gender" className="bg-bgLightGray rounded-md w-5/12 h-8 pl-3 pr-10 outline-none">
+                            <select name="gender" className="bg-bgLightGray rounded-lg mt-6 w-full h-10 pl-3 pr-10 outline-none">
                                 <option value="">Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
-                            <input type="number" name="phoneNumber" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Phone Number" />
-                            <input type="number" name="mobileNumber" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Mobile Number" />
+                            <Input type="number" name="phoneNumber" label="Phone number" variant="faded"   labelPlacement="outside" />
+                            <Input type="number" name="mobileNumber" label="Mobile Number"  variant="faded"   labelPlacement="outside" />
                         </div>
                         <div className="flex flex-row mt-5 gap-3">
-                            <input type="text" name="dateOfBirth" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Date Of Birth" />
-                            <input type="text" name="location" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Location" />
+                            <Input type="text" name="dateOfBirth" label="Date of Birth"   variant="faded"   labelPlacement="outside" />
+                            <Input type="text" name="location" label="Location"   variant="faded"   labelPlacement="outside"/>
                         </div>
                         <div className="flex flex-row mt-5 gap-3">
-                            <input type="text" name="interest" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Interest" />
-                            <input type="text" name="bio" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Bio" />
+                            <Input type="text" name="interest" label="Interest"   variant="faded"   labelPlacement="outside" />
+                            <Input type="text" name="bio" label="Bio"   variant="faded"   labelPlacement="outside" />
                         </div>
                     </div>
                 </div>
@@ -64,6 +66,11 @@ export default function AddUser(){
             </Form>            
         </div>
     )
+}
+
+export async function loader(){
+    const roles = await fetchAllRoles();
+    return roles;
 }
 
 

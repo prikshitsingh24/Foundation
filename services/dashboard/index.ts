@@ -33,6 +33,7 @@ export async function fetchAllUsers():Promise<any>{
 }
 
 export async function registerUser(userData:any){
+    console.log("Dfasdfasdfafd",userData);
     try{
         const registeredUser = await prisma.user.create({
             data: {
@@ -42,7 +43,7 @@ export async function registerUser(userData:any){
                 username:       userData.username,      
                 email:          userData.email,         
                 password:       userData.password,      
-                role:           userData.role,
+                roleId:         userData.role,
                 status:         "ACTIVE", 
                 gender:         userData.gender,
                 phoneNumber:    userData.phoneNumber,
@@ -66,7 +67,6 @@ export async function registerUser(userData:any){
 
 
 export async function deleteUsersByIds(ids:string[]){
-    console.log("faldsjflkadjsf",ids);
     try{
         const isUserDeleted = await prisma.user.deleteMany({
             where:{
@@ -98,7 +98,7 @@ export async function updateUserById(updateData:any,id:string){
                 username:       updateData.username,
                 email:          updateData.email,
                 password:       updateData.password,
-                role:           updateData.role,
+                roleId:           updateData.role,
                 status:         "ACTIVE", 
                 gender:         updateData.gender,
                 phoneNumber:    updateData.phoneNumber,
@@ -115,6 +115,20 @@ export async function updateUserById(updateData:any,id:string){
         return -1
     }catch(error){
         console.log(error)
+    }
+}
+
+
+
+//////////////////////////////////// Role services  /////////////////////////////////////////
+
+export async function fetchAllRoles():Promise<any>{
+    try{
+        const roles = await prisma.role.findMany();
+        return roles;
+    }catch(error){
+        console.log(error);
+        return [];
     }
 }
 

@@ -12,6 +12,9 @@
     "db": "npx prisma generate && npx prisma migrate dev"
   },
   "dependencies": {
+    "@nextui-org/button": "^2.2.9",
+    "@nextui-org/dropdown": "^2.3.9",
+    "@nextui-org/input": "^2.4.8",
     "@nextui-org/system": "^2.4.5",
     "@nextui-org/table": "^2.2.7",
     "@nextui-org/theme": "^2.4.4",

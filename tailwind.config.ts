@@ -4,7 +4,7 @@ import type { Config } from "tailwindcss";
 export default {
   content: [
     "./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/(table|checkbox|form|spacer).js"
+    "./node_modules/@nextui-org/theme/dist/components/(button|dropdown|input|table|ripple|spinner|menu|divider|popover|form|checkbox|spacer).js"
   ],
   theme: {
     extend: {
