@@ -14,13 +14,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum Role {
-  ADMIN
-  HR
-  MANAGER
-  ENGINEER
-  SALES
-}
+
 
 enum Status{
   ACTIVE
@@ -39,7 +33,7 @@ model User{
   email           String
   status          Status
   password        String
-  role            Role
+  roleId          String?
   gender          String?
   phoneNumber     String?
   mobileNumber    String?
@@ -47,8 +41,23 @@ model User{
   location        String?
   interest        String?
   bio             String?
+  createdAt       DateTime @default(now())
+
+  role           Role? @relation(fields: [roleId], references: [roleId])
 }
 
+
+model Role{
+  roleId          String @id @default(uuid())
+  role            String
+  status          Status
+  description     String?
+  users           User[]
+}
+
+
+
+//////////////////////////////////// Item schema ////////////////////////////////////////
 
 model Item{
   itemId          String @id @default(uuid())

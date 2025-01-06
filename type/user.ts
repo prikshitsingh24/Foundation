@@ -8,5 +8,6 @@ export type User = {
     email:    string;
     status:   Status;       
     password: string;    
-    role:     Role;         
+    roleId:   string | null;  
+    createdAt: Date;       
 }
