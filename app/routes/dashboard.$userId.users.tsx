@@ -52,10 +52,12 @@ export default function Users(){
                             Users
                         </div>
                     </NavLink>
+                    <NavLink to="role/table">
                     <div className={`text-sm rounded-xl cursor-pointer ${isRoleSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-14 h-8 flex justify-center items-center mr-2`}
                                         onClick={handleRoleClick}>
                         Roles
                     </div>
+                    </NavLink>
                     <div className={`text-sm rounded-xl cursor-pointer ${isPermissionManagerSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
                                         onClick={handlePermissionManagerClick}>
                         Permission manager

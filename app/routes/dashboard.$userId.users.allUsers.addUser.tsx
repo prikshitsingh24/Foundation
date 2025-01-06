@@ -7,13 +7,8 @@ import { isAddUserState, isEditUserState, userIdState } from "state/userState";
 
 export default function AddUser(){
     const [id,setId] = useRecoilState(userIdState);
-    const [isAddUser,setAddUser] = useRecoilState(isAddUserState);
-    const [isEditUser,setEditUser] = useRecoilState(isEditUserState);
     
-    const handleSaveClick=()=>{
-        setAddUser(false);
-        setEditUser(false);
-    }
+
     return(
         <div className="w-full h-full">
             <Form method="post" className="w-full h-full mt-5">
@@ -63,7 +58,7 @@ export default function AddUser(){
                     </div>
                 </div>
                 <input type="text" hidden value={id} name="userId" />
-                <button name="_action" value="addUser" onClick={handleSaveClick} className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
+                <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
                         Save
                 </button>
             </Form>            
