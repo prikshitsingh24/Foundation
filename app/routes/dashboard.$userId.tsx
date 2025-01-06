@@ -1,7 +1,9 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
+import { useRecoilState } from "recoil";
 import { fetchUserById } from "services/dashboard";
+import { userIdState } from "state/userState";
 import { User } from "type/user";
 
 
@@ -9,6 +11,8 @@ import { User } from "type/user";
 export default function Dashboard(){
 
     const details = useLoaderData<any>();
+    const [id,setId] = useRecoilState(userIdState);
+    setId(details.userId);
 
     return(
     

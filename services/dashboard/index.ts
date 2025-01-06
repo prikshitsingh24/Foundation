@@ -59,6 +59,7 @@ export async function registerUser(userData:any){
         return -1;
     }catch(error){
         console.log(error)
+        return -1;
     }
 }
 
