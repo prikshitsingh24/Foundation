@@ -34,7 +34,7 @@ export default function Dashboard(){
 
                     <div className="pt-20 grid grid-cols-[1fr_6fr] h-[700px] screen-1920:h-[890px] ">
                         <div>
-                            <div className="pb-5 text-2xl font-bold">
+                            <div className="pb-5 text-2xl pl-[10px] font-bold">
                                 Home
                             </div>
                             <div>
