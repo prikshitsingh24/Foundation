@@ -1,4 +1,4 @@
-import { Form, Link, NavLink, Outlet, redirect } from "@remix-run/react";
+import { Form, Link, NavLink, Outlet, data, redirect } from "@remix-run/react";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { isAddUserState, isEditUserState, selectedIdsState, userIdState } from "state/userState";
@@ -6,7 +6,8 @@ import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
 import { ActionFunctionArgs } from "@remix-run/node";
-import { deleteUsersByIds } from "services/dashboard";
+import { deleteRolesByRoleIds, deleteUsersByIds } from "services/dashboard";
+import { selectedRolesState } from "state/roleState";
 
 export default function Users(){
 
@@ -41,6 +42,7 @@ export default function Users(){
     }
 
     const [selectedKeys,setSelectedKeys]:any = useRecoilState(selectedIdsState);
+    const [selectedRoleKeys,setSelectedRoleKeys]:any = useRecoilState(selectedRolesState);
     
     return(
         <div className="w-full h-full">
@@ -80,13 +82,41 @@ export default function Users(){
                     <Form method="post">
                     <input type="text" hidden value={id} name="userId" />
                     <input type="text" name="ids" hidden value={Array.from(selectedKeys)} />
-                    <button className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                    <button name="_action" value="deleteUsers"className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
                         <img src={deleteIcon} width={20}/>
                     </button>
                     </Form>
                    <NavLink to="allUsers/addUser">
                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" >
-                        <img src={addIcon} width={20}/> Add user
+                        <img src={addIcon} width={20}/> Add User
+                    </div>
+                   </NavLink>
+                    </div> 
+                )}
+                {isRoleSelected && (
+                    <div className="flex flex-row gap-3">
+                    {selectedRoleKeys.size===1?(
+                        <NavLink to={`role/editRole/${String(Array.from(selectedRoleKeys))}`}>
+                        <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={editIcon} width={20}/>
+                        </div>
+                        </NavLink>
+                    ):(
+                    <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={editIcon} width={20}/>
+                    </div>
+                    
+                    )}
+                    <Form method="post">
+                    <input type="text" hidden value={id} name="userId" />
+                    <input type="text" name="roleIds" hidden value={Array.from(selectedRoleKeys)} />
+                    <button name="_action" value="deleteRoles"className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={deleteIcon} width={20}/>
+                    </button>
+                    </Form>
+                    <NavLink to="role/addRole">
+                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28" >
+                        <img src={addIcon} width={20}/> Add Role
                     </div>
                    </NavLink>
                     </div> 
@@ -100,12 +130,22 @@ export default function Users(){
 
 export async function action({request}:ActionFunctionArgs){
     const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    const userIds = String(data.ids).split(',');
-    const isUserDeleted = await deleteUsersByIds(userIds)
-    if(!isUserDeleted){
-    console.log("Error!! not able to delete entry");
+    const {_action, ...ids} = Object.fromEntries(formData);
+    if(_action == "deleteUsers"){
+        const userIds = String(ids.userId).split(',');
+        const isUserDeleted = await deleteUsersByIds(userIds)
+        if(!isUserDeleted){
+        console.log("Error!! not able to delete entry");
+        }
+        return redirect("/dashboard/"+ids.userId+"/users/allUsers/table");
     }
-    return redirect("/dashboard/"+data.userId+"/users/allUsers/table");
+    if(_action == "deleteRoles"){
+        const roleIds = String(ids.roleIds).split(',');
+        const isRoleDeleted = await deleteRolesByRoleIds(roleIds)
+        if(!isRoleDeleted){
+            console.log("Error!! not able to delete entry")
+        }
+        return redirect("/dashboard/"+ids.userId+"/users/role/table");
+    }
 
 }

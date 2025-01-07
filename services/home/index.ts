@@ -4,8 +4,8 @@ const prisma = new PrismaClient();
 
 export async function fetchAdminRole(){
     const isAdminRole = await prisma.user.findMany({
-        where:{
-            roleId: "8a523da8-3625-42e4-a256-d9ccca4b4974"
+        include:{
+            role: true
         }
     })
     if(isAdminRole.length != 0){

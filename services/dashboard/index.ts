@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { LoaderFunctionArgs } from "@remix-run/node";
 import { Item } from "type/item";
 import { User } from "type/user";
 
@@ -139,7 +140,65 @@ export async function fetchAllRoles():Promise<any>{
     }
 }
 
+export async function deleteRolesByRoleIds(roleIds:string[]){
+    try{
+        const isRoleDeleted = await prisma.role.deleteMany({
+            where:{
+                roleId:{
+                    in:roleIds
+                } 
+            }
+        })
+        return 1
+    }catch(error){
+        console.log(error)
+    }
+}
 
+export async function createRoles(details:any){
+    try{
+        const isCreateRoles = await prisma.role.create({
+            data:{
+                role:           details.role,
+                description:    details.description,
+                status:         "ACTIVE"
+            }
+        })
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export async function fetchRoleById(roleId:string){
+    try{
+        const isRoleData = await prisma.role.findUnique({
+            where:{
+                roleId: roleId
+            }
+        })
+        return isRoleData;
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export async function updateRoleById(detail:any,roleId:string){
+    try{
+        const isRoleUpdated = await prisma.role.update({
+            where:{
+                roleId: roleId
+            },
+            data:{
+                role:           detail.role,
+                description:    detail.description
+            }
+        })
+        return 0
+    }catch(error){
+        console.log(error)
+    }
+    return -1
+}
 
 /////////////////////////////////// Items services  /////////////////////////////////////////
 
