@@ -66,7 +66,7 @@ export default function AllUsers(){
                     <TableRow key={user.userId}>
                         <TableCell>{user.username}</TableCell>
                         <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.role}</TableCell>
+                        <TableCell>{user.role.role}</TableCell>
                         <TableCell>
                             <div className={`${user.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
                                 {user.status?"Active":"Inactive"}

@@ -11,6 +11,9 @@ export async function fetchUserById(userId: string){
         const userDetails = await prisma.user.findUnique({
             where:{
                 userId: userId
+            },
+            include:{
+                role:true
             }
         })
         if(userDetails){
@@ -24,7 +27,12 @@ export async function fetchUserById(userId: string){
 
 export async function fetchAllUsers():Promise<any>{
     try{
-        const allUsers = await prisma.user.findMany()
+        const allUsers = await prisma.user.findMany({
+            include: {
+              role: true,
+            },
+          });
+          console.log(allUsers)
         return allUsers;
     }catch(error){
         console.log(error);
@@ -33,7 +41,6 @@ export async function fetchAllUsers():Promise<any>{
 }
 
 export async function registerUser(userData:any){
-    console.log("Dfasdfasdfafd",userData);
     try{
         const registeredUser = await prisma.user.create({
             data: {
@@ -98,7 +105,7 @@ export async function updateUserById(updateData:any,id:string){
                 username:       updateData.username,
                 email:          updateData.email,
                 password:       updateData.password,
-                roleId:           updateData.role,
+                roleId:         updateData.role,
                 status:         "ACTIVE", 
                 gender:         updateData.gender,
                 phoneNumber:    updateData.phoneNumber,

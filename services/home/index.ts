@@ -16,18 +16,29 @@ export async function fetchAdminRole(){
 
 export async function registerAdmin(details:any){
     try{
-        const admin = await prisma.user.create({
+        const role = await prisma.role.create({
             data:{
-                username: details.username,
-                email: details.email,
-                password: details.password,
-                roleId: "8a523da8-3625-42e4-a256-d9ccca4b4974",
+                role: "ADMIN",
+                description:"Can acess all the features of the application",
                 status:"ACTIVE"
             }
         })
-        if(admin){
-            return admin.userId;
+        if(role){
+            const admin = await prisma.user.create({
+                data:{
+                    username: details.username,
+                    email: details.email,
+                    password: details.password,
+                    roleId: role.roleId,
+                    status:"ACTIVE"
+                }
+            })
+            if(admin){
+                return admin.userId;
+            }
+            return -1;
         }
+        
         return -1;
     }catch(error){
         console.log(error);

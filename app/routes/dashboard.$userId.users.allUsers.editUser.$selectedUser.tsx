@@ -8,7 +8,6 @@ import { userIdState } from "state/userState";
 export default function EditUser(){
     const {roles,...userDetails} = useLoaderData<any>();
     const [id,setId] = useRecoilState(userIdState);
-    console.log(userDetails)
         return(
             <div className="w-full h-full">
             <Form method="post" className="w-full h-full mt-5">
