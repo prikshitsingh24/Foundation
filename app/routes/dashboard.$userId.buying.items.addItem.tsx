@@ -1,4 +1,5 @@
 import { Input, Textarea } from "@nextui-org/input";
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 import { Form } from "@remix-run/react";
 import { useRecoilState } from "recoil";
 import { userIdState } from "state/userState";
@@ -58,28 +59,149 @@ export default function AddItem(){
                     </div>
                 </div>
                 <div className="flex flex-col pt-10 mt-5">
-                    More Information
-                    <div className="w-full">
-                        <div className="flex flex-row mt-5 gap-3">
-                            <select name="gender" className="bg-bgLightGray rounded-md w-5/12 h-8 pl-3 pr-10 outline-none">
-                                <option value="">Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                            <Input type="number" name="phoneNumber" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Phone Number" />
-                            <Input type="number" name="mobileNumber" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Mobile Number" />
-                        </div>
-                        <div className="flex flex-row mt-5 gap-3">
-                            <Input type="text" name="dateOfBirth" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Date Of Birth" />
-                            <Input type="text" name="location" className="bg-bgLightGray rounded-md h-8 pl-3 w-96 mr-4 outline-none" placeholder="Location" />
-                        </div>
-                        <div className="flex flex-row mt-5 gap-3">
-                            <Input type="text" name="interest" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Interest" />
-                            <Input type="text" name="bio" className="bg-bgLightGray rounded-md h-20 pl-3 w-96 mr-4 outline-none" placeholder="Bio" />
-                        </div>
+                    Barcode
+                    <div className="w-full mt-8">
+                    <Table
+                          removeWrapper
+                          aria-label="Users table"
+                          selectionMode="multiple"
+                          classNames={{
+                              wrapper: "min-h-[650px]",
+                          }}>
+                        <TableHeader>
+                        <TableColumn>No.</TableColumn>
+                        <TableColumn>Barcode</TableColumn>
+                        <TableColumn>Barcode Type</TableColumn>
+                        <TableColumn>UOM</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                         
+                        </TableBody>
+                    </Table>      
+                    </div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2">Add Barcode</div>
+                </div>
+                <div className="flex flex-col pt-10 mt-5">
+                    Accouting
+                    <div className="w-full mt-8">
+                    <Table
+                          removeWrapper
+                          aria-label="Users table"
+                          selectionMode="multiple"
+                          classNames={{
+                              wrapper: "min-h-[650px]",
+                          }}>
+                        <TableHeader>
+                        <TableColumn>No.</TableColumn>
+                        <TableColumn>Company</TableColumn>
+                        <TableColumn>Default Warehouse</TableColumn>
+                        <TableColumn>Default Price List</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                         
+                        </TableBody>
+                    </Table>      
+                    </div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2">Add Accouting</div>
+                </div>          
+                <div className="flex flex-col pt-10">
+                       Purchasing
+                       <div className="flex flex-row mt-4 gap-3">
+                        <Input type="text" name="defaultPurchaseUnitOfMeasure" label="Default Purchase Unit of Measure" variant="faded" labelPlacement="outside"/>
+                        <Input type="text" name="leadTimeInDays" label="Lead Time in Days" variant="faded" labelPlacement="outside"/>
+                        <Input type="text" name="safetyStock" label="Safety Stock" variant="faded" labelPlacement="outside" />
+                    </div>
+                    <div className="flex flex-row mt-5 gap-3">
+                        <Input type="text" name="weigthPerUnit" label="Weight per Unit" variant="faded" labelPlacement="outside" />
+                        <Input type="text" name="defaultMaterialRequestType" label="Default Material Request Type" variant="faded" labelPlacement="outside" />
+                        <Input type="text" name="weightUom" label="Weight UOM" variant="faded" labelPlacement="outside" />
+                    </div>
+                    <div className="flex flex-row mt-5 gap-3">
+                        <Input type="text" name="valuation" label="Valuation" variant="faded" labelPlacement="outside" />
                     </div>
                 </div>
-                <Input type="text" hidden value={id} name="userId" />
+                <div className="flex flex-col pt-10 mt-5">
+                    Supplier Details
+                    <div className="w-full mt-8">
+                    <Table
+                          removeWrapper
+                          aria-label="Users table"
+                          selectionMode="multiple"
+                          classNames={{
+                              wrapper: "min-h-[650px]",
+                          }}>
+                        <TableHeader>
+                        <TableColumn>Supplier</TableColumn>
+                        <TableColumn>Supplier Part Number</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                         
+                        </TableBody>
+                    </Table>      
+                    </div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2">Add Supplier</div>
+                </div> 
+                <div className="flex flex-col pt-10">
+                       Foreign Trade Details
+                    <div className="flex flex-row mt-4 gap-3">
+                        <Input type="text" name="countryOfOrigin" label="Country of Origin" variant="faded" labelPlacement="outside"/>
+                        <Input type="text" name="customsTariffNumber" label="Customs Tariff Number" variant="faded" labelPlacement="outside"/>
+                    </div>
+                </div>
+                <div className="flex flex-col pt-10">
+                       Sales
+                    <div className="flex flex-row mt-4 gap-3">
+                        <Input type="text" name="defaultSalesUnitOfMeasure" label="Default Sales Unit of Measure" variant="faded" labelPlacement="outside"/>
+                        <Input type="text" name="maxDiscount" label="Max Discount" variant="faded" labelPlacement="outside"/>
+                    </div>
+                </div>
+                <div className="flex flex-col pt-10 mt-5">
+                    Customer Details
+                    <div className="w-full mt-8">
+                    <Table
+                          removeWrapper
+                          aria-label="Users table"
+                          selectionMode="multiple"
+                          classNames={{
+                              wrapper: "min-h-[650px]",
+                          }}>
+                        <TableHeader>
+                        <TableColumn>No.</TableColumn>
+                        <TableColumn>Customer Name</TableColumn>
+                        <TableColumn>Customer Group</TableColumn>
+                        <TableColumn>Ref Code</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                        </TableBody>
+                    </Table>      
+                    </div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2">Add Customer</div>
+                </div>
+                <div className="flex flex-col pt-10 mt-5">
+                    Taxes
+                    <div className="w-full mt-8">
+                    <Table
+                          removeWrapper
+                          aria-label="Users table"
+                          selectionMode="multiple"
+                          classNames={{
+                              wrapper: "min-h-[650px]",
+                          }}>
+                        <TableHeader>
+                        <TableColumn>No.</TableColumn>
+                        <TableColumn>Item Tax Template</TableColumn>
+                        <TableColumn>Tax Category</TableColumn>
+                        <TableColumn>Valid From</TableColumn>
+                        <TableColumn>Minimum Net Rate</TableColumn>
+                        <TableColumn>Maximum Net Rate</TableColumn>
+                        </TableHeader>
+                        <TableBody>
+                        </TableBody>
+                    </Table>      
+                    </div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2">Add Tax</div>
+                </div>
+                <input type="text" hidden value={id} name="userId" />
                 <button name="_action" value="addUser" className="bg-btnBlack rounded-md text-bgWhite h-8 mt-5 cursor-pointer flex justify-evenly items-center w-16">
                         Save
                 </button>
