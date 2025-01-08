@@ -99,6 +99,15 @@ model Accounting{
   createdAt                   DateTime @default(now())
 }
 
+/////////////////////////////////// Account Schema //////////////////////////////////////
+
+model Account{
+  accountId       String @id @default(uuid())
+  accountName     String
+  accountNumber   String
+  accountType     String
+  status          Status
+}
 
 model Supplier{
   supplierId          String @id @default(uuid())
@@ -107,8 +116,6 @@ model Supplier{
   supplier            String
   supplierPartNumber  String
 }
-
-
 
 model CustomerDetails{
   customerDetailsId   String @id @default(uuid())

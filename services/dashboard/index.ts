@@ -226,3 +226,33 @@ export async function fetchAllItems():Promise<Item[]>{
         return [];
     }
 }
+
+///////////////////////////////////// Accounting ////////////////////////////////////////////
+
+export async function fetchAccountTable(){
+    try{
+        const isAccountTable = await prisma.account.findMany()
+        if(isAccountTable)
+        return isAccountTable
+    }catch(error){
+        console.log(error)
+    }
+    return -1
+}
+
+export async function createNewAccount(details:any){
+    try{
+        const isAccountCreated = await prisma.account.create({
+            data:{
+                accountName: details.accountName,
+                accountNumber: details.accountNumber,
+                accountType: details.accountType,
+                status: "ACTIVE"
+            }
+        });
+        return 0
+    }catch(error){
+        console.log(error)
+    }
+    return -1
+}

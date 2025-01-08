@@ -48,7 +48,7 @@ export default function Users(){
         <div className="w-full h-full">
             <div className="flex flex-row items-center justify-between">
                 <div className="flex flex-row item-center">
-                    <NavLink to={`allUsers/table`}>
+                    <NavLink to="allUsers/table">
                         <div className={`text-sm rounded-xl cursor-pointer ${isUserSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-14 h-8 flex justify-center items-center mr-2`}
                                         onClick={handleUserClick}>
                             Users
