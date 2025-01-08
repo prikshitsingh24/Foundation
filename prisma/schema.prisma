@@ -67,7 +67,13 @@ model Item{
   status          Status
 }
 
+/////////////////////////////////// Account Schema //////////////////////////////////////
 
-
-
+model Account{
+  accountId       String @id @default(uuid())
+  accountName     String
+  accountNumber   String
+  accountType     String
+  status          Status
+}
 
