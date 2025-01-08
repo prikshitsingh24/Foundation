@@ -33,7 +33,6 @@ export async function fetchAllUsers():Promise<any>{
               role: true,
             },
           });
-          console.log(allUsers)
         return allUsers;
     }catch(error){
         console.log(error);
@@ -142,14 +141,28 @@ export async function fetchAllRoles():Promise<any>{
 
 export async function deleteRolesByRoleIds(roleIds:string[]){
     try{
+        const isUserForRoleExist = await prisma.user.findMany({
+            where:{
+                roleId:{
+                    in:roleIds
+                }
+            }
+        })
+        console.log(isUserForRoleExist)
+        if(isUserForRoleExist.length > 0){
+            return {error:true, message:"Please delete the users associated with the role first"};
+        }
         const isRoleDeleted = await prisma.role.deleteMany({
             where:{
                 roleId:{
                     in:roleIds
-                } 
+                }
             }
         })
-        return 1
+        if(isRoleDeleted){
+            return {error:false, message:"Role deleted successfully"};
+        }
+        return {error:true, message:"Role deletion failed"};
     }catch(error){
         console.log(error)
     }

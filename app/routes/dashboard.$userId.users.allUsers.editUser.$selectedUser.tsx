@@ -82,7 +82,6 @@ export async function action({request,params}:ActionFunctionArgs){
     const id = await params.selectedUser;
     if(id){
         const updateUser =  await updateUserById(Object.fromEntries(formData),id);
-        console.log(updateUser)
         return redirect(`/dashboard/${Object.fromEntries(formData).userId}/users/allUsers/table`)
     }
     return 0;

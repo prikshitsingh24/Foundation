@@ -1,4 +1,4 @@
-import { Form, Link, NavLink, Outlet, data, redirect } from "@remix-run/react";
+import { Form, Link, NavLink, Outlet, data, redirect, useActionData } from "@remix-run/react";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { isAddUserState, isEditUserState, selectedIdsState, userIdState } from "state/userState";
@@ -142,6 +142,9 @@ export async function action({request}:ActionFunctionArgs){
     if(_action == "deleteRoles"){
         const roleIds = String(ids.roleIds).split(',');
         const isRoleDeleted = await deleteRolesByRoleIds(roleIds)
+        if(isRoleDeleted && isRoleDeleted.error==true){
+           return redirect("/dashboard/"+ids.userId+"/users/role/table");
+        }
         if(!isRoleDeleted){
             console.log("Error!! not able to delete entry")
         }
