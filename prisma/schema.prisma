@@ -22,7 +22,7 @@ enum Status{
 }
 
 
-
+//////////////////////////////////// User schema ////////////////////////////////////////
 
 model User{
   userId          String  @id @default(uuid())
@@ -42,7 +42,6 @@ model User{
   interest        String?
   bio             String?
   createdAt       DateTime @default(now())
-
   role           Role? @relation(fields: [roleId], references: [roleId])
 }
 
@@ -53,6 +52,7 @@ model Role{
   status          Status
   description     String?
   users           User[]
+  createdAt       DateTime @default(now())
 }
 
 
@@ -65,9 +65,71 @@ model Item{
   name            String
   itemGroup       String
   status          Status
+  barcode         Barcode[]
+  Acounting       Accounting[]
+  supplier        Supplier[]
+  tax             Tax[]
+  customerDetails CustomerDetails[]
+  createdAt       DateTime @default(now())
+}
+
+
+model Barcode{
+  barcodeId       String @id @default(uuid())
+  barcode         String
+  barcodeType     String  
+  itemId          String
+  item            Item @relation(fields: [itemId], references: [itemId])
+  createdAt       DateTime @default(now())
+}
+
+
+model Accounting{
+  accountingId                String @id @default(uuid())
+  itemId                      String
+  item                        Item @relation(fields: [itemId], references: [itemId])
+  defaultPriceList            String
+  defaultDiscountAccount      String
+  defaultBuyingCostCenter     String
+  defaultExpenseAccount       String
+  defaultSupplier             String
+  defaultProvisionalAccount   String
+  defaultSellingCostCenter    String
+  defaultIncomeAccount        String
+  createdAt                   DateTime @default(now())
+}
+
+
+model Supplier{
+  supplierId          String @id @default(uuid())
+  itemId              String
+  item                Item @relation(fields: [itemId], references: [itemId])
+  supplier            String
+  supplierPartNumber  String
 }
 
 
 
+model CustomerDetails{
+  customerDetailsId   String @id @default(uuid())
+  itemId              String
+  item                Item @relation(fields: [itemId], references: [itemId])
+  customerName        String
+  customeerGroup      String
+  RefCode            String
+}
 
+
+
+model Tax{
+  taxId             String @id @default(uuid())
+  itemId            String
+  item              Item @relation(fields: [itemId], references: [itemId])
+  itemTaxTemplate   String
+  taxCategory       String
+  validFrom         String
+  minimumNetRate    String
+  maximumNetRate    String
+  createdAt         DateTime @default(now())
+}
 
