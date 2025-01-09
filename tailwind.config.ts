@@ -40,6 +40,20 @@ export default {
         'screen-1536': '1536px',
         'screen-1920': '1900px'
       },
+      animation: {
+        'slide-in-left': 'slideInLeft 0.5s ease-out',
+        'slide-out-left': 'slideOutLeft 0.5s ease-out'
+      },
+      keyframes: {
+        slideInLeft: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        slideOutLeft: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        }
+      },
     },
   },
   plugins: [nextui()],

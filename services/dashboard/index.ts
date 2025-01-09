@@ -227,6 +227,119 @@ export async function fetchAllItems():Promise<Item[]>{
     }
 }
 
+
+export async function createItem(details:any) {
+    try {
+        let barcodeList:any = [];
+        let accountingList:any = [];
+        let supplierList:any = [];
+        let customerList:any = [];
+        let taxList:any = [];
+
+        if (details.barcodeList) {
+            barcodeList = JSON.parse(details.barcodeList);
+        }
+        if (details.accountList) {
+            accountingList = JSON.parse(details.accountList);
+        }
+        if (details.supplierList) {
+            supplierList = JSON.parse(details.supplierList);
+        }
+        if (details.customerList) {
+            customerList = JSON.parse(details.customerList);
+        }
+        if (details.taxList) {
+            taxList = JSON.parse(details.taxList);
+        }
+
+        const createdItem = await prisma.$transaction(async (tx) => {
+            // Create the main item with all relationships
+            const item = await tx.item.create({
+                data: {
+                    ID: details.itemCode,
+                    name: details.itemName,
+                    itemGroup: details.itemGroup,
+                    status: "ACTIVE",
+                    
+                    // Create barcodes
+                    barcode: details.barcodeList ? {
+                        create: barcodeList.map((barcodeData:any) => ({
+                            barcode: barcodeData.barcode,
+                            barcodeType: barcodeData.barcodeType,
+                            uom: barcodeData.uom
+                        }))
+                    } : undefined,
+                    //Create accounting entries
+                    accounting: details.accountList ? {
+                        create: accountingList.map((accounting:any) => ({
+                            company: accounting.company,
+                            defaultWarehouse:accounting.defaultWarehouse,
+                            defaultPriceList: accounting.defaultPriceList,
+                    
+                        }))
+                    } : undefined,
+
+                    // Create supplier entries
+                    supplier: details.supplierList ? {
+                        create: supplierList.map((supplier:any) => ({
+                            supplier: supplier.supplier,
+                            supplierPartNumber: supplier.supplierPartNumber
+                        }))
+                    } : undefined,
+
+                    // Create customer details
+                    customerDetails: details.customerList ? {
+                        create: customerList.map((customer:any) => ({
+                            customerName: customer.customerName,
+                            customeerGroup: customer.customerGroup,
+                            RefCode: customer.refCode
+                        }))
+                    } : undefined,
+
+                    // Create tax entries
+                    tax: details.taxList ? {
+                        create: taxList.map((tax:any) => ({
+                            itemTaxTemplate: tax.itemTaxTemplate,
+                            taxCategory: tax.taxCategory,
+                            validFrom: tax.validFrom,
+                            minimumNetRate: tax.minimumNetRate,
+                            maximumNetRate: tax.maximumNetRate
+                        }))
+                    } : undefined
+                },
+                // Include all relationships in the return value
+                include: {
+                    barcode: true,
+                    accounting: true,
+                    supplier: true,
+                    customerDetails: true,
+                    tax: true
+                }
+            });
+
+            return item;
+        });
+
+        return {
+            success: true,
+            data: createdItem,
+            message: "Item created successfully with all relationships"
+        };
+
+    } catch (error) {
+        console.error("Error in createItem:", error);
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : "Unknown error occurred",
+            message: "Failed to create item"
+        };
+    }
+}
+
+
+
+
+
 ///////////////////////////////////// Accounting ////////////////////////////////////////////
 
 export async function fetchAccountTable(){

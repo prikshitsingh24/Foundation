@@ -14,7 +14,6 @@ export default function Dashboard(){
     const details = useLoaderData<any>();
     const [id,setId] = useRecoilState(userIdState);
     setId(details.userId);
-    console.log(details)
     return(
     
         <div className="h-screen w-full grid grid-cols-[0_1fr_0] screen-1280:grid-cols-[1fr_1280px_1fr] screen-1366:[1fr_1366px_1fr] screen-1536:[1fr_1536px_1fr] screen-1440:grid-cols-[1fr_1440px_1fr] overflow-hidden">

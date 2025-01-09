@@ -66,7 +66,7 @@ model Item{
   itemGroup       String
   status          Status
   barcode         Barcode[]
-  Acounting       Accounting[]
+  accounting      Accounting[]
   supplier        Supplier[]
   tax             Tax[]
   customerDetails CustomerDetails[]
@@ -78,6 +78,7 @@ model Barcode{
   barcodeId       String @id @default(uuid())
   barcode         String
   barcodeType     String  
+  uom             String
   itemId          String
   item            Item @relation(fields: [itemId], references: [itemId])
   createdAt       DateTime @default(now())
@@ -88,26 +89,12 @@ model Accounting{
   accountingId                String @id @default(uuid())
   itemId                      String
   item                        Item @relation(fields: [itemId], references: [itemId])
+  company                     String
+  defaultWarehouse            String
   defaultPriceList            String
-  defaultDiscountAccount      String
-  defaultBuyingCostCenter     String
-  defaultExpenseAccount       String
-  defaultSupplier             String
-  defaultProvisionalAccount   String
-  defaultSellingCostCenter    String
-  defaultIncomeAccount        String
   createdAt                   DateTime @default(now())
 }
 
-/////////////////////////////////// Account Schema //////////////////////////////////////
-
-model Account{
-  accountId       String @id @default(uuid())
-  accountName     String
-  accountNumber   String
-  accountType     String
-  status          Status
-}
 
 model Supplier{
   supplierId          String @id @default(uuid())
@@ -139,4 +126,16 @@ model Tax{
   maximumNetRate    String
   createdAt         DateTime @default(now())
 }
+
+
+/////////////////////////////////// Account Schema //////////////////////////////////////
+
+model Account{
+  accountId       String @id @default(uuid())
+  accountName     String
+  accountNumber   String
+  accountType     String
+  status          Status
+}
+
 
