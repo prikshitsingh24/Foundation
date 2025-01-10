@@ -1,5 +1,5 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import { fetchAccountTable } from "services/dashboard";
+import { fetchPaymentEntryTable } from "services/dashboard";
 import {
     Table,
     TableHeader,
@@ -9,13 +9,12 @@ import {
     TableCell,
   } from "@nextui-org/table";
 
-export default function AccountTable(){
+export default function PaymentEntryTable(){
 
-    const accountData = useLoaderData<any>();
+    const paymentEntryTableData = useLoaderData<any>();
 
     return(
         <>
-            
             <Form className="flex flex-row mt-5 ">
                 <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Id" />
                 <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Account Name" />
@@ -33,30 +32,37 @@ export default function AccountTable(){
                 //onSelectionChange={setSelectedKeys}
                 >
                 <TableHeader>
-                <TableColumn>ACCOUNT NAME</TableColumn>
-                <TableColumn>ACCOUNT NUMBER</TableColumn>
+                {/* <TableColumn>ID</TableColumn> */}
+                <TableColumn>TITLE</TableColumn>
                 <TableColumn>STATUS</TableColumn>
+                <TableColumn>PAYMENT TYPE</TableColumn>
+                <TableColumn>POSTING DATE</TableColumn>
+                <TableColumn>MODE OF PAYMENT</TableColumn>
+                <TableColumn>ID</TableColumn>
                 </TableHeader>
                 <TableBody>
-                {accountData.map((account:any,index:number)=>(
-                    <TableRow key={account.accountId}>
-                        <TableCell>{account.accountName}</TableCell>
-                        <TableCell>{account.accountNumber}</TableCell>
+                {paymentEntryTableData.map((payment:any,index:number)=>(
+                    <TableRow key={payment.id}>
+                        <TableCell>{payment.title}</TableCell>
                         <TableCell>
-                            <div className={`${account.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
-                                {account.status?"Active":"Inactive"}
+                            <div className={`${payment.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
+                                {payment.status?"Active":"Inactive"}
                             </div>
                         </TableCell>
+                        <TableCell>{payment.type}</TableCell>
+                        <TableCell>{payment.postingDate}</TableCell>
+                        <TableCell>{payment.mode}</TableCell>
+                        <TableCell>{payment.id}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
-    </Table>
+            </Table>
             </div>
         </>
     )
 }
 
 export async function loader() {
-    const isAccountTable = await fetchAccountTable()
-    return isAccountTable;
+    const isPaymentEntryTable = await fetchPaymentEntryTable()
+    return isPaymentEntryTable;
 }

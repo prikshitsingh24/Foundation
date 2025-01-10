@@ -138,4 +138,26 @@ model Account{
   status          Status
 }
 
+model SalesInvoice{
+  id              String @id @default(uuid())
+  title           String
+  status          String
+  grandTotal      String
+}
 
+model PurchaseInvoice{
+  id              String @id @default(uuid())
+  title           String
+  status          String
+  postingDate     String
+  grandTotal      String
+}
+
+model PaymentEntry{
+  id              String @id @default(uuid())
+  title           String
+  status          String
+  type            String
+  postingDate     String
+  mode            String
+}

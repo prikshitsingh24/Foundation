@@ -1,5 +1,5 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import { fetchAccountTable } from "services/dashboard";
+import { fetchSalesInvoiceTable } from "services/dashboard";
 import {
     Table,
     TableHeader,
@@ -9,13 +9,12 @@ import {
     TableCell,
   } from "@nextui-org/table";
 
-export default function AccountTable(){
+export default function SalesInvoiceTable(){
 
-    const accountData = useLoaderData<any>();
+    const salesInvocieTableData = useLoaderData<any>();
 
     return(
         <>
-            
             <Form className="flex flex-row mt-5 ">
                 <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Id" />
                 <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Account Name" />
@@ -33,30 +32,32 @@ export default function AccountTable(){
                 //onSelectionChange={setSelectedKeys}
                 >
                 <TableHeader>
-                <TableColumn>ACCOUNT NAME</TableColumn>
-                <TableColumn>ACCOUNT NUMBER</TableColumn>
+                <TableColumn>TITLE</TableColumn>
                 <TableColumn>STATUS</TableColumn>
+                <TableColumn>GRAND TOTAL</TableColumn>
+                <TableColumn>ID</TableColumn>
                 </TableHeader>
                 <TableBody>
-                {accountData.map((account:any,index:number)=>(
-                    <TableRow key={account.accountId}>
-                        <TableCell>{account.accountName}</TableCell>
-                        <TableCell>{account.accountNumber}</TableCell>
+                {salesInvocieTableData.map((invoice:any,index:number)=>(
+                    <TableRow key={invoice.Id}>
+                        <TableCell>{invoice.title}</TableCell>
                         <TableCell>
-                            <div className={`${account.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
-                                {account.status?"Active":"Inactive"}
+                            <div className={`${invoice.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
+                                {invoice.status?"Active":"Inactive"}
                             </div>
                         </TableCell>
+                        <TableCell>{invoice.grandTotal}</TableCell>
+                        <TableCell>{invoice.id}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
-    </Table>
+            </Table>
             </div>
         </>
     )
 }
 
 export async function loader() {
-    const isAccountTable = await fetchAccountTable()
-    return isAccountTable;
+    const isSalesInvoiceTable = await fetchSalesInvoiceTable()
+    return isSalesInvoiceTable;
 }
