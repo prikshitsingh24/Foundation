@@ -14,12 +14,23 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-
-
 enum Status{
   ACTIVE
   INACTIVE
 }
+
+
+///////////////////////////////////// Company schema ////////////////////////////////////
+
+model Company{
+  companyId           String  @id @default(uuid())
+  companyName         String
+  companyAbbreviation String
+  createdAt           DateTime @default(now())
+}
+
+
+
 
 
 //////////////////////////////////// User schema ////////////////////////////////////////

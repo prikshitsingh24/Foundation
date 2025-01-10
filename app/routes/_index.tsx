@@ -1,7 +1,8 @@
+import { Input } from "@nextui-org/input";
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Form, redirect, useLoaderData } from "@remix-run/react";
 import { fetchAdminRole, login, registerAdmin } from "services/home";
-import { Details } from "type";
+import foundationIcon from "/foundationIcon.png"
 
 export const meta: MetaFunction = () => {
   return [
@@ -20,23 +21,26 @@ export default function Index() {
         
       </div>
     <div className="h-screen w-full flex flex-col justify-center items-center"> 
-      <div className="flex flex-col items-center bg-bgWhite shadow-lg pl-8 pr-8 pt-16 pb-14 rounded-md">
-        <div className="mb-8 text-xl">
-          Foundation
+      <div className="flex flex-col items-center bg-bgWhite shadow-lg mt-10 w-fit pr-20 border-2 border-borderGray hover:border-borderHoverGray pl-20 pt-10 pb-14 rounded-md">
+        <div className="mb-5 text-xl flex flex-col items-center font-bold">
+        <img src={foundationIcon} alt="" className="w-20 mb-5"/>
+          <div>Foundation</div>
         </div>
         {isAdmin?(
           <Form method="post" className="grid grid-rows-4 gap-2 justify-items-center">
-          <input type="text" name="username" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <input type="email" name="email" placeholder="Email" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <input type="password" name="password" placeholder="Password" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <button name="_action" value="login" className="bg-btnBlack rounded-md w-2/5 h-10 text-textWhite">LogIn</button>
+          <Input type="text" name="username" label="Username" variant="faded" labelPlacement="outside" required/>
+          <Input type="email" name="email" label="Email" variant="faded" labelPlacement="outside" required/>
+          <Input type="password" name="password" label="Password" variant="faded" labelPlacement="outside" required/>
+          <button name="_action" value="login" className="bg-btnBlack rounded-md w-2/5 h-10 mt-5 text-textWhite">LogIn</button>
         </Form>
         ):(
           <Form method="post" className="grid grid-rows-4 gap-2 justify-items-center">
-          <input type="text" name="username" placeholder="Username" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <input type="email" name="email" placeholder="Email" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <input type="password" name="password" placeholder="Password" className="bg-bgGray rounded-md h-8 w-80 pl-3 outline-none"/>
-          <button name="_action" value="signup" className="bg-btnBlack rounded-md w-2/5 h-10 text-textWhite">SignUp</button>
+          <Input type="text" name="username" label="Username" variant="faded" labelPlacement="outside" required/>
+          <Input type="text" name="companyName" label="Company name" variant="faded" labelPlacement="outside" required/>
+          <Input type="text" name="companyAbbreviation" label="Company abbreviation" variant="faded" labelPlacement="outside" required/>
+          <Input type="email" name="email" label="Email" variant="faded" labelPlacement="outside" required/>
+          <Input type="password" name="password" label="Password" variant="faded" labelPlacement="outside" required/>
+          <button name="_action" value="signup" className="bg-btnBlack rounded-md w-2/5 h-10 mt-5 text-textWhite">SignUp</button>
         </Form>
         )}
       </div>

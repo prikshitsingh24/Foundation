@@ -4,6 +4,22 @@ import { Item } from "type/item";
 import { User } from "type/user";
 
 
+//////////////////////////////////// Home services  /////////////////////////////////////////
+
+
+export async function fetchCompany(){
+    const companyDetails = await prisma.company.findMany();
+    return companyDetails;
+}
+
+
+
+
+
+
+//////////////////////////////////// User services  /////////////////////////////////////////
+
+
 const prisma = new PrismaClient();
 
 export async function fetchUserById(userId: string){
