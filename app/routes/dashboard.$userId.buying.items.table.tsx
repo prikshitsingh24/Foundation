@@ -9,11 +9,14 @@ import {
   } from "@nextui-org/table";
 import { Item } from "type/item";
 import { fetchAllItems } from "services/dashboard";
+import { useRecoilState } from "recoil";
+import { selectedItemIdsState } from "state/itemState";
 
 
 export default function Items(){
 
     const allItems = useLoaderData<any>();
+    const [selectedItemIds,setSelectedItemIds]:any = useRecoilState(selectedItemIdsState)
 
     return(
         <>
@@ -34,6 +37,8 @@ export default function Items(){
                   classNames={{
                     wrapper: "min-h-[650px]",
                   }}
+                selectedKeys={selectedItemIds}
+                onSelectionChange={setSelectedItemIds}
                 >
                 <TableHeader>
                 <TableColumn>NAME</TableColumn>
@@ -43,7 +48,7 @@ export default function Items(){
                 </TableHeader>
                 <TableBody>
                 {allItems.map((item:any,index:number)=>(
-                    <TableRow key={index}>
+                    <TableRow key={item.itemId}>
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.itemGroup}</TableCell>
                         <TableCell>{item.ID}</TableCell>

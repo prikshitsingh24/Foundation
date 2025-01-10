@@ -2,18 +2,19 @@ import { Form, NavLink, Outlet } from "@remix-run/react";
 import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
-import { ActionFunctionArgs } from "@remix-run/node";
-import { deleteUsersByIds } from "services/dashboard";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { deleteRolesByItemIds, deleteUsersByIds } from "services/dashboard";
 import React from "react";
 import { selectedItemIdsState } from "state/itemState";
 import { useRecoilState } from "recoil";
+import { userIdState } from "state/userState";
 
 export default function Buying(){
     const [isItemSelected, setIsItemSelected] = React.useState(false);
     const [isMaterialRequiredSelected, setIsMaterialRequiredSelected] = React.useState(false);
     const [isPurchaseOrderSelected, setIsPurchaseOrderSelected] = React.useState(false);
-    const [selectedItemKeys,setSelectedItemkeys]:any = useRecoilState(selectedItemIdsState);
-    const [id,setItemId]:any = useRecoilState(selectedItemIdsState);
+    const [selectedItemIds,setSelectedItemIds]:any = useRecoilState(selectedItemIdsState);
+    const [id,setUserId]:any = useRecoilState(userIdState);
 
     const handleItemsClick =()=>{
         setIsItemSelected(true);
@@ -54,8 +55,8 @@ export default function Buying(){
             </div>
             {isItemSelected && (
                 <div className="flex flex-row gap-3">
-                {selectedItemKeys.size===1?(
-                    <NavLink to={`allUsers/editUser/${String(Array.from(selectedItemKeys))}`}>
+                {selectedItemIds.size===1?(
+                    <NavLink to={`items/editItem/${String(Array.from(selectedItemIds))}`}>
                     <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
                         <img src={editIcon} width={20}/>
                     </div>
@@ -68,8 +69,8 @@ export default function Buying(){
                 )}
                 <Form method="post">
                 <input type="text" hidden value={id} name="userId" />
-                <input type="text" name="ids" hidden value={Array.from(selectedItemKeys)} />
-                <button className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                <input type="text" name="itemIds" hidden value={Array.from(selectedItemIds)} />
+                <button name="_action" value="deleteItems" className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
                     <img src={deleteIcon} width={20}/>
                 </button>
                 </Form>
@@ -84,4 +85,21 @@ export default function Buying(){
         <Outlet/>
     </div>
     )
+}
+
+
+export async function action({request}:ActionFunctionArgs){
+    const formData = await request.formData();
+    const {_action, ...ids} = Object.fromEntries(formData);
+    if(_action==="deleteItems"){
+    const itemIds = String(ids.itemIds).split(',');
+    const isRoleDeleted = await deleteRolesByItemIds(itemIds)
+    if(isRoleDeleted){
+        return redirect("/dashboard/"+ids.userId+"/buying/items/table");
+    }
+    if(!isRoleDeleted){
+        console.log("Error!! not able to delete entry")
+    }
+    return redirect("/dashboard/"+ids.userId+"/buying/items/table");
+    }
 }

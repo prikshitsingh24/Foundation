@@ -60,10 +60,30 @@ model Role{
 //////////////////////////////////// Item schema ////////////////////////////////////////
 
 model Item{
-  itemId          String @id @default(uuid())
-  ID              String
-  name            String
-  itemGroup       String
+  itemId                        String @id @default(uuid())
+  ID                            String
+  name                          String
+  itemGroup                     String
+  unitOfMeasure                 String
+  openingStock                  String
+  valuationRate                 String
+  standardSellingRate           String
+  brandName                     String
+  description                   String
+  shelfLifeInDays               String
+  warrantyPeriod                String
+  endOfLife                     String
+  weightPerUnit                 String
+  defaultMaterialRequestType    String
+  weightUom                     String
+  valuation                     String
+  defaultPurchaseUnitOfMeasure  String
+  leadTimeInDays                String
+  safetyStock                   String
+  countryOfOrigin               String
+  customsTariffNumber           String
+  defaultSalesUnitMeasure       String
+  maxDiscount                   String
   status          Status
   barcode         Barcode[]
   accounting      Accounting[]
@@ -109,8 +129,8 @@ model CustomerDetails{
   itemId              String
   item                Item @relation(fields: [itemId], references: [itemId])
   customerName        String
-  customeerGroup      String
-  RefCode            String
+  customerGroup       String
+  refCode             String
 }
 
 

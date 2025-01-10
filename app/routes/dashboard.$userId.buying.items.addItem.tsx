@@ -1,6 +1,6 @@
 import { Input, Textarea } from "@nextui-org/input";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
-import { ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
@@ -82,8 +82,6 @@ export default function AddItem(){
     }
 
     const handleInsertSupplierClick=()=>{
-        console.log(supplier);
-        console.log(supplierPartNumber);
         setSupplierList([...supplierList,{supplier:supplier,supplierPartNumber:supplierPartNumber}]);
         setIsAddSupplier(false);
     }
@@ -193,6 +191,7 @@ export default function AddItem(){
                                 }}
                                 label="Description"
                                 variant="faded"
+                                name="description"
                     />
                     </div>
                 </div>
@@ -205,7 +204,7 @@ export default function AddItem(){
                         <Input type="text" name="endOfLife" label="End of Life" variant="faded" labelPlacement="outside" />
                     </div>
                     <div className="flex flex-row mt-5 gap-3">
-                        <Input type="text" name="weigthPerUnit" label="Weight per Unit" variant="faded" labelPlacement="outside" />
+                        <Input type="text" name="weightPerUnit" label="Weight per Unit" variant="faded" labelPlacement="outside" />
                         <Input type="text" name="defaultMaterialRequestType" label="Default Material Request Type" variant="faded" labelPlacement="outside" />
                         <Input type="text" name="weightUom" label="Weight UOM" variant="faded" labelPlacement="outside" />
                     </div>
@@ -362,14 +361,6 @@ export default function AddItem(){
                         <Input type="text" name="leadTimeInDays" label="Lead Time in Days" variant="faded" labelPlacement="outside"/>
                         <Input type="text" name="safetyStock" label="Safety Stock" variant="faded" labelPlacement="outside" />
                     </div>
-                    <div className="flex flex-row mt-5 gap-3">
-                        <Input type="text" name="weigthPerUnit" label="Weight per Unit" variant="faded" labelPlacement="outside" />
-                        <Input type="text" name="defaultMaterialRequestType" label="Default Material Request Type" variant="faded" labelPlacement="outside" />
-                        <Input type="text" name="weightUom" label="Weight UOM" variant="faded" labelPlacement="outside" />
-                    </div>
-                    <div className="flex flex-row mt-5 gap-3">
-                        <Input type="text" name="valuation" label="Valuation" variant="faded" labelPlacement="outside" />
-                    </div>
                 </div>
                 <div className="flex flex-col pt-10 mt-5">
                     Supplier Details
@@ -447,7 +438,7 @@ export default function AddItem(){
                 <div className="flex flex-col pt-10">
                        Sales
                     <div className="flex flex-row mt-4 gap-3">
-                        <Input type="text" name="defaultSalesUnitOfMeasure" label="Default Sales Unit of Measure" variant="faded" labelPlacement="outside"/>
+                        <Input type="text" name="defaultSalesUnitMeasure" label="Default Sales Unit of Measure" variant="faded" labelPlacement="outside"/>
                         <Input type="text" name="maxDiscount" label="Max Discount" variant="faded" labelPlacement="outside"/>
                     </div>
                 </div>
@@ -621,8 +612,10 @@ export default function AddItem(){
 
 export async function action({request}:ActionFunctionArgs){
     const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    console.log(data);
+    const {userId,...data} = Object.fromEntries(formData);
     const isItemCreated = await createItem(data);
+    if(isItemCreated){
+        return redirect("/dashboard/"+userId+"/buying/items/table")
+    }
     return null
 }
