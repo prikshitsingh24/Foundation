@@ -638,6 +638,7 @@ export async function createNewAccount(details:any){
     try{
         const isAccountCreated = await prisma.account.create({
             data:{
+                accountId: "",
                 accountName: details.accountName,
                 accountNumber: details.accountNumber,
                 accountType: details.accountType,
