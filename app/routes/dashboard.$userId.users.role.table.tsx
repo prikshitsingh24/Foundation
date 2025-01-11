@@ -1,7 +1,4 @@
 import { Form, NavLink, Outlet, redirect, useActionData, useLoaderData } from "@remix-run/react";
-
-
-import { deleteRolesByRoleIds, deleteUsersByIds, fetchAllRoles, fetchAllUsers, registerUser } from "services/dashboard";
 import React from "react";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { useRecoilState } from "recoil";
@@ -17,6 +14,7 @@ import {
   } from "@nextui-org/table";
 import { User } from "type/user";
 import { selectedRolesState } from "state/roleState";
+import { fetchAllRoles } from "services/dashboard/role";
 
 export default function RoleTable(){
 

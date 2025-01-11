@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 import { Form, useLoaderData } from "@remix-run/react";
 import { useRecoilState } from "recoil";
-import { fetchAllMaterialRequested } from "services/dashboard";
+import { fetchAllMaterialRequested } from "services/dashboard/material";
 import { selectedMaterialRequestedIdState } from "state/materialRequestedState";
 
 

@@ -6,8 +6,9 @@ import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
 import { ActionFunctionArgs } from "@remix-run/node";
-import { deleteRolesByRoleIds, deleteUsersByIds } from "services/dashboard";
 import { selectedRolesState } from "state/roleState";
+import { deleteUsersByIds } from "services/dashboard/user";
+import { deleteRolesByRoleIds } from "services/dashboard/role";
 
 export default function Users(){
 

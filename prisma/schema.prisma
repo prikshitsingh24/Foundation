@@ -212,7 +212,7 @@ model Account{
 
 model SalesInvoice{
   id              String @id @default(uuid())
-  invocieId       String
+  invoiceId       String
   title           String
   status          String
   grandTotal      String

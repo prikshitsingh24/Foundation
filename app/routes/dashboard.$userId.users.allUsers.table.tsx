@@ -1,7 +1,4 @@
 import { Form, NavLink, Outlet, redirect, useActionData, useLoaderData } from "@remix-run/react";
-
-
-import { deleteUsersByIds, fetchAllUsers, registerUser } from "services/dashboard";
 import React from "react";
 import { ActionFunctionArgs } from "@remix-run/node";
 import { useRecoilState } from "recoil";
@@ -15,6 +12,7 @@ import {
     TableCell,
   } from "@nextui-org/table";
 import { User } from "type/user";
+import { fetchAllUsers } from "services/dashboard/user";
 
 export default function AllUsers(){
 

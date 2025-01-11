@@ -8,9 +8,9 @@ import {
     TableCell,
   } from "@nextui-org/table";
 import { Item } from "type/item";
-import { fetchAllItems } from "services/dashboard";
 import { useRecoilState } from "recoil";
 import { selectedItemIdsState } from "state/itemState";
+import { fetchAllItems } from "services/dashboard/item";
 
 
 export default function Items(){

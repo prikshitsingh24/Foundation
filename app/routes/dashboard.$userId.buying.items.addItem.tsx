@@ -4,7 +4,7 @@ import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { createItem } from "services/dashboard";
+import { createItem } from "services/dashboard/item";
 import { userIdState } from "state/userState";
 
 

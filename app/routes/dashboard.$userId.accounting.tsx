@@ -5,7 +5,6 @@ import { selectedIdsState, userIdState } from "state/userState";
 import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
-import { ActionFunctionArgs } from "@remix-run/node";
 import { isAddAccountState, isEditAccountState, selectedAccountsState } from "state/accountState";
 import { selectedSalesInvoiceState } from "state/salesInvoiceState";
 import { selectedPurchaseInvoiceState } from "state/purchaseInvoiceState";

@@ -2,11 +2,11 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node";
 import { Form, Outlet, useLoaderData } from "@remix-run/react";
 import Navbar from "components/navbar/navbar";
 import { useRecoilState } from "recoil";
-import { fetchUserById } from "services/dashboard";
 import { userIdState } from "state/userState";
 import { User } from "type/user";
 import searchIcon from "/searchIcon.png"
 import foundationIcon from "/foundationIcon.png"
+import { fetchUserById } from "services/dashboard/user";
 
 
 export default function Dashboard(){

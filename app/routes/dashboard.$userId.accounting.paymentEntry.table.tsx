@@ -1,5 +1,4 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import { fetchPaymentEntryTable } from "services/dashboard";
 import {
     Table,
     TableHeader,
@@ -8,6 +7,7 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
+import { fetchPaymentEntryTable } from "services/dashboard/accounting";
 
 export default function PaymentEntryTable(){
 

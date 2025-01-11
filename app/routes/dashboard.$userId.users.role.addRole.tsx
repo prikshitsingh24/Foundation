@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, redirect, useActionData } from "@remix-run/react";
 import { useRecoilState } from "recoil";
-import { createRoles } from "services/dashboard";
+import { createRoles } from "services/dashboard/role";
 import { userIdState } from "state/userState";
 
 export default function AddRole(){

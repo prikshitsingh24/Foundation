@@ -1,5 +1,4 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import { fetchPurchaseInvoiceTable } from "services/dashboard";
 import {
     Table,
     TableHeader,
@@ -10,6 +9,7 @@ import {
   } from "@nextui-org/table";
 import { selectedPurchaseInvoiceState } from "state/purchaseInvoiceState";
 import { useRecoilState } from "recoil";
+import { fetchPurchaseInvoiceTable } from "services/dashboard/accounting";
 
 export default function PurchaseInvoiceTable(){
 

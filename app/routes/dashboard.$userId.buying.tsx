@@ -3,12 +3,13 @@ import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { deleteMaterialRequiredByIds, deleteRolesByItemIds, deleteUsersByIds } from "services/dashboard";
 import React from "react";
 import { selectedItemIdsState } from "state/itemState";
 import { useRecoilState } from "recoil";
 import { userIdState } from "state/userState";
 import { selectedMaterialRequestedIdState } from "state/materialRequestedState";
+import { deleteMaterialRequiredByIds } from "services/dashboard/material";
+import { deleteRolesByItemIds } from "services/dashboard/item";
 
 export default function Buying(){
     const [isItemSelected, setIsItemSelected] = React.useState(false);

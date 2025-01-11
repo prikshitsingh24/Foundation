@@ -3,7 +3,7 @@ import { LineChart } from "components/graphs/lineChart";
 import { PieChart } from "components/graphs/pieChart";
 import { ScatterChart } from "components/graphs/scatterChart";
 import { VerticalBarChart } from "components/graphs/verticalBarChart";
-import { fetchCompany } from "services/dashboard";
+import { fetchCompany } from "services/dashboard/home";
 
 export default function Home(){
 

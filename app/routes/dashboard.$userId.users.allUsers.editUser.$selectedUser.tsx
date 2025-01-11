@@ -1,7 +1,8 @@
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, redirect, useLoaderData } from "@remix-run/react";
 import { useRecoilState } from "recoil";
-import { fetchAllRoles, fetchUserById, updateUserById } from "services/dashboard";
+import { fetchAllRoles } from "services/dashboard/role";
+import { fetchUserById, updateUserById } from "services/dashboard/user";
 import { userIdState } from "state/userState";
 
 

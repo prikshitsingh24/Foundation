@@ -1,7 +1,7 @@
 import { Input, Textarea } from "@nextui-org/input";
 import { Form, redirect } from "@remix-run/react";
 import { useRecoilState } from "recoil";
-import { createNewPaymentEntry } from "services/dashboard";
+import { createNewPaymentEntry } from "services/dashboard/accounting";
 import { userIdState } from "state/userState";
 
 export default function NewAccount(){

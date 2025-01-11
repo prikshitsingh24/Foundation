@@ -3,7 +3,8 @@ import { ActionFunctionArgs } from "@remix-run/node";
 import { Form, redirect, replace, useActionData, useLoaderData } from "@remix-run/react";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { deleteUsersByIds, fetchAllRoles, registerUser } from "services/dashboard";
+import { fetchAllRoles } from "services/dashboard/role";
+import { registerUser } from "services/dashboard/user";
 import { isAddUserState, isEditUserState, userIdState } from "state/userState";
 
 export default function AddUser(){
