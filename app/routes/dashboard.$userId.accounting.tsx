@@ -1,13 +1,14 @@
-import { Form, Link, NavLink, Outlet, data, redirect, useActionData } from "@remix-run/react";
+import { Form, NavLink, Outlet } from "@remix-run/react";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { isAddUserState, isEditUserState, selectedIdsState, userIdState } from "state/userState";
+import { selectedIdsState, userIdState } from "state/userState";
 import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
 import { ActionFunctionArgs } from "@remix-run/node";
-import { deleteRolesByRoleIds, deleteUsersByIds } from "services/dashboard";
-import { selectedRolesState } from "state/roleState";
+import { isAddAccountState, isEditAccountState, selectedAccountsState } from "state/accountState";
+import { selectedSalesInvoiceState } from "state/salesInvoiceState";
+import { selectedPurchaseInvoiceState } from "state/purchaseInvoiceState";
 
 export default function Accounting(){
 
@@ -15,7 +16,7 @@ export default function Accounting(){
     const [isSalesInvoiceSelected, setIsSalesInvoiceSelected] = React.useState(false);
     const [isPurchaseInvoiceSelected, setIsPurchaseInvoiceSelected] = React.useState(false);
     const [isPaymentEntrySelected, setIsPaymentEntrySelected] = React.useState(false);
-    const [isNewAccount,setNewAccount] = useRecoilState(isAddUserState);
+
     const [id,setId] = useRecoilState(userIdState);
 
 
@@ -47,6 +48,10 @@ export default function Accounting(){
         setIsPaymentEntrySelected(true)
     }
     
+    const [selectedAccountKeys,setSelectedAccountKeys]:any = useRecoilState(selectedAccountsState);
+    const [selectedSalesInvoiceKeys,setSelectedSalesInvoiceKeys]:any = useRecoilState(selectedSalesInvoiceState);
+    const [selectedPurchaseInvoiceKeys,setSelectedPurchaseInvoiceKeys]:any = useRecoilState(selectedPurchaseInvoiceState);
+
     return(
         <div className="w-full h-full">
             <div className="flex flex-row items-center justify-between">
@@ -78,32 +83,80 @@ export default function Accounting(){
                 </div>
                 {isAccountSelected && 
                 (
-                    <div>
-                        <NavLink to="account/newAccount">
-                            <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-28">
-                                New Account
-                            </div>
+                    <div className="flex flex-row gap-3">
+                    {selectedAccountKeys.size===1?(
+                        <NavLink to={`account/editAccount/${String(Array.from(selectedAccountKeys))}`}>
+                        <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={editIcon} width={20}/>
+                        </div>
                         </NavLink>
+                    ):(
+                        <div></div>
+                    )}
+                    <Form method="post">
+                    <input type="text" hidden value={id} name="userId" />
+                    <input type="text" name="accountIds" hidden value={Array.from(selectedAccountKeys)} />
+                    <button name="_action" value="deleteAccounts"className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={deleteIcon} width={20}/>
+                    </button>
+                    </Form>
+                    <NavLink to="account/newAccount">
+                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-36" >
+                        <img src={addIcon} width={20}/> New Account
                     </div>
+                   </NavLink>
+                    </div> 
                 )}
                 {isSalesInvoiceSelected && 
                 (
-                    <div>
-                        <NavLink to="salesInvoice/newInvoice">
-                            <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-32">
-                                New Invoice
-                            </div>
+                    <div className="flex flex-row gap-3">
+                    {selectedSalesInvoiceKeys.size===1?(
+                        <NavLink to={`salesInvoice/editInvoice/${String(Array.from(selectedSalesInvoiceKeys))}`}>
+                        <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={editIcon} width={20}/>
+                        </div>
                         </NavLink>
+                    ):(
+                        <div></div>
+                    )}
+                    <Form method="post">
+                    <input type="text" hidden value={id} name="userId" />
+                    <input type="text" name="invoiceIds" hidden value={Array.from(selectedSalesInvoiceKeys)} />
+                    <button name="_action" value="deleteAccounts"className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={deleteIcon} width={20}/>
+                    </button>
+                    </Form>
+                    <NavLink to="salesInvoice/newInvoice">
+                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-36" >
+                        <img src={addIcon} width={20}/> New Invoice
+                    </div>
+                   </NavLink>
                     </div>
                 )}
                 {isPurchaseInvoiceSelected && 
                 (
-                    <div>
-                        <NavLink to="purchaseInvoice/newInvoice">
-                            <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-32">
-                                New Invoice
-                            </div>
+                    <div className="flex flex-row gap-3">
+                    {selectedPurchaseInvoiceKeys.size===1?(
+                        <NavLink to={`purchaseInvoice/editInvoice/${String(Array.from(selectedPurchaseInvoiceKeys))}`}>
+                        <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                            <img src={editIcon} width={20}/>
+                        </div>
                         </NavLink>
+                    ):(
+                        <div></div>
+                    )}
+                    <Form method="post">
+                    <input type="text" hidden value={id} name="userId" />
+                    <input type="text" name="invoiceIds" hidden value={Array.from(selectedPurchaseInvoiceKeys)} />
+                    <button name="_action" value="deleteAccounts"className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={deleteIcon} width={20}/>
+                    </button>
+                    </Form>
+                    <NavLink to="purchaseInvoice/newInvoice">
+                    <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-36" >
+                        <img src={addIcon} width={20}/> New Invoice
+                    </div>
+                   </NavLink>
                     </div>
                 )}
                 {isPaymentEntrySelected && 
