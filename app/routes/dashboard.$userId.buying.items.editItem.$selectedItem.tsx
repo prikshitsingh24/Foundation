@@ -5,7 +5,7 @@ import { Form, redirect, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { LoaderFunctionArgs } from "react-router";
 import { useRecoilState } from "recoil";
-import { fetchAllItems, fetchItemById, updateItemById } from "services/dashboard";
+import { fetchItemById, updateItemById } from "services/dashboard/item";
 import { userIdState } from "state/userState";
 
 
