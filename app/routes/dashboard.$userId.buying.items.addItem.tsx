@@ -50,7 +50,7 @@ export default function AddItem(){
     const [accountingList,setAccountingList]:any = useState<{company:string,defaultWarehouse:string,defaultPriceList:string} | any>([]);
 
 
-    const handleAddAcountingClick=()=>{
+    const handleAddAccountingClick=()=>{
         setIsAddAccounting(true);
     }
 
@@ -352,7 +352,7 @@ export default function AddItem(){
                     </Table>
                     </div>
                     )}
-                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2 cursor-pointer" onClick={handleAddAcountingClick}>Add Accouting</div>
+                    <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2 cursor-pointer" onClick={handleAddAccountingClick}>Add Accouting</div>
                 </div>          
                 <div className="flex flex-col pt-10">
                        Purchasing

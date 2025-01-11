@@ -3,34 +3,36 @@ import addIcon from "/addIcon.png";
 import editIcon from "/editIcon.png";
 import deleteIcon from "/deleteIcon.png";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { deleteRolesByItemIds, deleteUsersByIds } from "services/dashboard";
+import { deleteMaterialRequiredByIds, deleteRolesByItemIds, deleteUsersByIds } from "services/dashboard";
 import React from "react";
 import { selectedItemIdsState } from "state/itemState";
 import { useRecoilState } from "recoil";
 import { userIdState } from "state/userState";
+import { selectedMaterialRequestedIdState } from "state/materialRequestedState";
 
 export default function Buying(){
     const [isItemSelected, setIsItemSelected] = React.useState(false);
-    const [isMaterialRequiredSelected, setIsMaterialRequiredSelected] = React.useState(false);
+    const [isMaterialRequestedSelected, setIsMaterialRequestedSelected] = React.useState(false);
     const [isPurchaseOrderSelected, setIsPurchaseOrderSelected] = React.useState(false);
     const [selectedItemIds,setSelectedItemIds]:any = useRecoilState(selectedItemIdsState);
+    const [selectedMaterialRequestedId,setSelectedMaterialRequestedId]:any = useRecoilState(selectedMaterialRequestedIdState);
     const [id,setUserId]:any = useRecoilState(userIdState);
 
     const handleItemsClick =()=>{
         setIsItemSelected(true);
-        setIsMaterialRequiredSelected(false);
+      setIsMaterialRequestedSelected(false);
         setIsPurchaseOrderSelected(false);
     }
 
     const handleMaterialRequiredClick =()=>{
         setIsItemSelected(false);
-        setIsMaterialRequiredSelected(true);
+      setIsMaterialRequestedSelected(true);
         setIsPurchaseOrderSelected(false);
     }
 
     const handlePurchaseOrderClick =()=>{
         setIsItemSelected(false);
-        setIsMaterialRequiredSelected(false);
+      setIsMaterialRequestedSelected(false);
         setIsPurchaseOrderSelected(true);
     }
     
@@ -44,10 +46,12 @@ export default function Buying(){
                         Items
                     </div>
                 </NavLink>
-                <div className={`text-sm rounded-xl cursor-pointer ${isMaterialRequiredSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
+              <NavLink to="materialRequested/table">
+              <div className={`text-sm rounded-xl cursor-pointer ${isMaterialRequestedSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
                                     onClick={handleMaterialRequiredClick}>
-                   Material Required
+                   Material Requested
                 </div>
+              </NavLink>
                 <div className={`text-sm rounded-xl cursor-pointer ${isPurchaseOrderSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
                                     onClick={handlePurchaseOrderClick}>
                     Purchase Order
@@ -80,7 +84,36 @@ export default function Buying(){
                 </div>
                </NavLink>
                 </div> 
-            )}               
+            )}
+
+             {isMaterialRequestedSelected && (
+                <div className="flex flex-row gap-3">
+                {selectedItemIds.size===1?(
+                    <NavLink to={`items/editItem/${String(Array.from(selectedItemIds))}`}>
+                    <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={editIcon} width={20}/>
+                    </div>
+                    </NavLink>
+                ):(
+                <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                    <img src={editIcon} width={20}/>
+                </div>
+                
+                )}
+                <Form method="post">
+                <input type="text" hidden value={id} name="userId" />
+                <input type="text" name="materialRequestedIds" hidden value={Array.from(selectedMaterialRequestedId)} />
+                <button name="_action" value="deleteMaterialRequest" className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                    <img src={deleteIcon} width={20}/>
+                </button>
+                </Form>
+               <NavLink to="materialRequested/addMaterialRequested">
+               <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-56" >
+                    <img src={addIcon} width={20}/> Add Material Requested
+                </div>
+               </NavLink>
+                </div> 
+            )}                
         </div>
         <Outlet/>
     </div>
@@ -101,5 +134,17 @@ export async function action({request}:ActionFunctionArgs){
         console.log("Error!! not able to delete entry")
     }
     return redirect("/dashboard/"+ids.userId+"/buying/items/table");
+    }
+    if(_action==="deleteMaterialRequest"){
+        const itemIds = String(ids.materialRequestedIds).split(',');
+        const isMaterialDeleted = await deleteMaterialRequiredByIds(itemIds)
+        if(isMaterialDeleted){
+            return redirect("/dashboard/"+ids.userId+"/buying/materialRequested/table");
+        }
+        if(!isMaterialDeleted){
+            console.log("Error!! not able to delete entry");
+            return redirect("/dashboard/"+ids.userId+"/buying/materialRequested/table");
+        }
+        return redirect("/dashboard/"+ids.userId+"/buying/materialRequested/table");
     }
 }

@@ -158,6 +158,46 @@ model Tax{
   createdAt         DateTime @default(now())
 }
 
+/////////////////////////////// Material Requested Schema ///////////////////////////////
+
+
+model MaterialRequested{
+  materialRequestedId     String @id @default(uuid())
+  status                  String
+  company                 String
+  purpose                 String
+  transactionDate         String
+  requiredBy              String
+  setTargetWarehouse      String
+  ID                      String
+  material                Material[]
+}
+
+model Material {
+  materialid           String    @id @default(uuid())
+  itemCode             String
+  requiredBy           String
+  itemName             String
+  description          String
+  quantity             String
+  uom                  String
+  uomConversionFactor  String
+  targetWarehouse      String
+  rate                 String
+  expenseAccount       String
+  wipCompositeAsset    String
+  manufacturer         String
+  bomNo                String
+  project              String
+  costCenter           String
+  materialRequestedId   String
+  materialRequested     MaterialRequested @relation(fields: [materialRequestedId], references: [materialRequestedId])
+}
+
+
+
+
+
 
 /////////////////////////////////// Account Schema //////////////////////////////////////
 

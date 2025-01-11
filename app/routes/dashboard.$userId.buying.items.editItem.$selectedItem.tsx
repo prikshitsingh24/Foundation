@@ -51,7 +51,7 @@ export default function EditItem(){
     const [accountingList,setAccountingList]:any = useState<{company:string,defaultWarehouse:string,defaultPriceList:string} | any>(itemDetails[0].accounting);
 
 
-    const handleAddAcountingClick=()=>{
+    const handleAddAccountingClick=()=>{
         setIsAddAccounting(true);
     }
 
@@ -351,7 +351,7 @@ export default function EditItem(){
                 </Table>
                 </div>
                 )}
-                <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2 cursor-pointer" onClick={handleAddAcountingClick}>Add Accouting</div>
+                <div className="rounded-xl mt-4 bg-bgLightGray w-fit p-2 cursor-pointer" onClick={handleAddAccountingClick}>Add Accouting</div>
             </div>          
             <div className="flex flex-col pt-10">
                    Purchasing
