@@ -8,19 +8,26 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
+import React from "react";
+import { useRecoilState } from "recoil";
+import { isAddAccountState, isEditAccountState, selectedAccountsState } from "state/accountState";
 
 export default function AccountTable(){
 
     const accountData = useLoaderData<any>();
 
+    const [addAccount,setAddAccount] = useRecoilState(isAddAccountState);
+    const [isDelete,setIsDelete] = React.useState(true);
+    const [editAccount,setEditAccount] =  useRecoilState(isEditAccountState);
+    const [selectedAccountKeys,setSelectedAccountKeys]:any = useRecoilState(selectedAccountsState);
+
     return(
         <>
-            
-            <Form className="flex flex-row mt-5 ">
-                <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Id" />
-                <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Account Name" />
-                <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Accont Number" />
-            </Form>
+                    <Form className="flex flex-row mt-5 ">
+                    <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Id" />
+                    <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Account Name" />
+                    <input type="text" className="bg-bgLightGray rounded-md h-8 pl-3 w-40 mr-4 outline-none" placeholder="Accont Number" />
+                    </Form>
             <div className="flex flex-col gap-3 mt-5">
             <Table
                 removeWrapper
@@ -29,8 +36,8 @@ export default function AccountTable(){
                 classNames={{
                     wrapper: "min-h-[650px]",
                 }}
-                //selectedKeys={selectedKeys}
-                //onSelectionChange={setSelectedKeys}
+                selectedKeys={selectedAccountKeys}
+                onSelectionChange={setSelectedAccountKeys}
                 >
                 <TableHeader>
                 <TableColumn>ACCOUNT NAME</TableColumn>
@@ -39,7 +46,7 @@ export default function AccountTable(){
                 </TableHeader>
                 <TableBody>
                 {accountData.map((account:any,index:number)=>(
-                    <TableRow key={account.accountId}>
+                    <TableRow key={account.id}>
                         <TableCell>{account.accountName}</TableCell>
                         <TableCell>{account.accountNumber}</TableCell>
                         <TableCell>
@@ -50,7 +57,7 @@ export default function AccountTable(){
                     </TableRow>
                 ))}
                 </TableBody>
-    </Table>
+            </Table>
             </div>
         </>
     )
@@ -58,5 +65,8 @@ export default function AccountTable(){
 
 export async function loader() {
     const isAccountTable = await fetchAccountTable()
-    return isAccountTable;
+    if(isAccountTable != null){
+        return isAccountTable;
+    }
+    return [];
 }

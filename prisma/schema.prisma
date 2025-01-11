@@ -202,7 +202,8 @@ model Material {
 /////////////////////////////////// Account Schema //////////////////////////////////////
 
 model Account{
-  accountId       String @id @default(uuid())
+  id              String @id @default(uuid())
+  accountId       String
   accountName     String
   accountNumber   String
   accountType     String
@@ -211,6 +212,7 @@ model Account{
 
 model SalesInvoice{
   id              String @id @default(uuid())
+  invocieId       String
   title           String
   status          String
   grandTotal      String
@@ -218,6 +220,7 @@ model SalesInvoice{
 
 model PurchaseInvoice{
   id              String @id @default(uuid())
+  invoiceId       String
   title           String
   status          String
   postingDate     String

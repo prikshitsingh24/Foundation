@@ -8,10 +8,14 @@ import {
     TableRow,
     TableCell,
   } from "@nextui-org/table";
+import { selectedSalesInvoiceState } from "state/salesInvoiceState";
+import { useRecoilState } from "recoil";
 
 export default function SalesInvoiceTable(){
 
     const salesInvocieTableData = useLoaderData<any>();
+
+    const [selectedInvoiceKeys,setSelectedInvoiceKeys]:any = useRecoilState(selectedSalesInvoiceState);
 
     return(
         <>
@@ -28,8 +32,8 @@ export default function SalesInvoiceTable(){
                 classNames={{
                     wrapper: "min-h-[650px]",
                 }}
-                //selectedKeys={selectedKeys}
-                //onSelectionChange={setSelectedKeys}
+                selectedKeys={selectedInvoiceKeys}
+                onSelectionChange={setSelectedInvoiceKeys}
                 >
                 <TableHeader>
                 <TableColumn>TITLE</TableColumn>
@@ -39,7 +43,7 @@ export default function SalesInvoiceTable(){
                 </TableHeader>
                 <TableBody>
                 {salesInvocieTableData.map((invoice:any,index:number)=>(
-                    <TableRow key={invoice.Id}>
+                    <TableRow key={invoice.id}>
                         <TableCell>{invoice.title}</TableCell>
                         <TableCell>
                             <div className={`${invoice.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
@@ -47,7 +51,7 @@ export default function SalesInvoiceTable(){
                             </div>
                         </TableCell>
                         <TableCell>{invoice.grandTotal}</TableCell>
-                        <TableCell>{invoice.id}</TableCell>
+                        <TableCell>{invoice.invoiceId}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
