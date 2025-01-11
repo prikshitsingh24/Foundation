@@ -252,7 +252,7 @@ export async function action({request}:ActionFunctionArgs){
     const {userId,...data} = Object.fromEntries(formData);
     const isCreated = await createMaterialRequested(data);
     if(isCreated){
-        return redirect("/dashboard"+userId+"/buying/materialRequested/table")
+        return redirect("/dashboard/"+userId+"/buying/materialRequested/table")
     }
     return null;
 }
