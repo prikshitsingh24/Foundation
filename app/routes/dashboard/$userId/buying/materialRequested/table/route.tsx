@@ -33,11 +33,11 @@ export default function MaterialRequestedTable(){
             >
             <TableHeader>
             <TableColumn>Title</TableColumn>
-            <TableColumn>Status</TableColumn>
             <TableColumn>Purpose</TableColumn>
             <TableColumn>Required By</TableColumn>
             <TableColumn>Set Target Warehouse</TableColumn>
             <TableColumn>ID</TableColumn>
+            <TableColumn>Status</TableColumn>
             </TableHeader>
             <TableBody>
             {allMaterialRequestedData.map((material:any,index:number)=>(

@@ -20,7 +20,10 @@ export async function fetchAllItems():Promise<Item[]>{
 
 export async function fetchItemById(id:string){
     try{
-        const item = await prisma.item.findMany({
+        const item = await prisma.item.findUnique({
+            where:{
+                itemId:id
+            },
             include:{
                 barcode:true,
                 accounting:true,

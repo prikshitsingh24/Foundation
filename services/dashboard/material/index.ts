@@ -101,3 +101,87 @@ export async function  deleteMaterialRequiredByIds(ids:string[]){
         console.error(error)
     }
 }
+
+
+export async function fetchMaterialRequestedById(id:string){
+    try{
+        const isMaterialRequestedData = await prisma.materialRequested.findUnique({
+            where:{
+                materialRequestedId:id
+            },
+            include:{
+                material:true
+            }
+        });
+        return isMaterialRequestedData;
+    }catch(error){
+        console.log(error)
+    }
+}
+
+
+export async function updateMaterialById(details:any,id:string){
+    let materialList:any = [];
+    try{
+        if(details.materialList){
+            materialList = JSON.parse(details.materialList)
+        }
+
+        const isMaterialUpdated = await prisma.$transaction(async(tx)=>{
+
+            await Promise.all([
+                tx.material.deleteMany({
+                    where:{
+                        materialRequestedId:id
+                    }
+                })
+            ])
+
+            const update= await tx.materialRequested.update({
+                where:{
+                    materialRequestedId:id
+                },
+                data:{
+                    ID:details.series,
+                    transactionDate:details.transactionDate,
+                    status:"DRAFT",
+                    purpose:details.purpose,
+                    requiredBy:details.requiredBy,
+                    company: details.company,
+                    setTargetWarehouse: details.setTargetWarehouse,
+                    material: materialList?{
+                        createMany:{
+                            data: materialList.map((material: any) => ({
+                                    itemCode: material.itemCode,
+                                    requiredBy: material.requiredBy,
+                                    itemName: material.itemName,
+                                    description: material.description,
+                                    quantity: material.quantity,
+                                    uom: material.uom,
+                                    uomConversionFactor: material.uomConversionFactor,
+                                    targetWarehouse: material.targetWarehouse,
+                                    rate: material.rate,
+                                    expenseAccount: material.expenseAccount,
+                                    wipCompositeAsset: material.wipCompositeAsset,
+                                    manufacturer: material.manufacturer,
+                                    bomNo: material.bomNo,
+                                    project: material.project,
+                                    costCenter: material.costCenter
+                                  }))
+                            
+                        }
+                    }:undefined
+                }
+            })
+            if(update){
+                return true;
+            }
+            return false;
+        })
+
+        return isMaterialUpdated;
+         
+    }catch(error){
+        console.log(error)
+    }
+}

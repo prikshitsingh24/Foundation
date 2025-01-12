@@ -89,8 +89,8 @@ export default function Buying(){
 
              {isMaterialRequestedSelected && (
                 <div className="flex flex-row gap-3">
-                {selectedItemIds.size===1?(
-                    <NavLink to={`items/editItem/${String(Array.from(selectedItemIds))}`}>
+                {selectedMaterialRequestedId.size===1?(
+                    <NavLink to={`materialRequested/editMaterialRequested/${String(Array.from(selectedMaterialRequestedId))}`}>
                     <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
                         <img src={editIcon} width={20}/>
                     </div>

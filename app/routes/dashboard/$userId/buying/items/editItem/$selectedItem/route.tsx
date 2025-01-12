@@ -18,7 +18,7 @@ export default function EditItem(){
     const [barcode,setBarcode] = useState("");
     const [barcodeType,setBarcodeType] = useState("");
     const [uom,setUom] = useState("");
-    const [barcodeList,setBarcodeList]:any = useState<{barcode:string,barcodeType:string,uom:string} | any>(itemDetails[0].barcode);
+    const [barcodeList,setBarcodeList]:any = useState<{barcode:string,barcodeType:string,uom:string} | any>(itemDetails.barcode);
 
     
     const handleAddBarcodeClick=()=>{
@@ -48,7 +48,7 @@ export default function EditItem(){
     const [company,setCompany] = useState("");
     const [defaultWarehouse,setWarehouse] = useState("");
     const [defaultPriceList,setDefaultPriceList] = useState("");
-    const [accountingList,setAccountingList]:any = useState<{company:string,defaultWarehouse:string,defaultPriceList:string} | any>(itemDetails[0].accounting);
+    const [accountingList,setAccountingList]:any = useState<{company:string,defaultWarehouse:string,defaultPriceList:string} | any>(itemDetails.accounting);
 
 
     const handleAddAccountingClick=()=>{
@@ -76,7 +76,7 @@ export default function EditItem(){
     const [isAddSupplier,setIsAddSupplier] = useState(false);
     const [supplier,setSupplier] = useState("");
     const [supplierPartNumber,setSupplierPartNumber] = useState("");
-    const [supplierList,setSupplierList]:any = useState<{supplier:string,supplierPartNumber:string} | any>(itemDetails[0].supplier);
+    const [supplierList,setSupplierList]:any = useState<{supplier:string,supplierPartNumber:string} | any>(itemDetails.supplier);
 
     const handleAddSupplierClick=()=>{
         setIsAddSupplier(true);
@@ -100,7 +100,7 @@ export default function EditItem(){
     const [customerName,setCustomerName] = useState("");
     const [customerGroup,setCustomerGroup] = useState("");
     const [refCode,setRefCode] = useState("");
-    const [customerList,setCustomerList]:any = useState<{customerName:string,customerGroup:string,refCode:string} | any>(itemDetails[0].customerDetails);
+    const [customerList,setCustomerList]:any = useState<{customerName:string,customerGroup:string,refCode:string} | any>(itemDetails.customerDetails);
 
     const handleAddCustomerClick=()=>{
         setIsAddCustomer(true);
@@ -129,7 +129,7 @@ export default function EditItem(){
     const [validFrom,setValidFrom] = useState("");
     const [minimumNetRate,setMinimumNetRate] = useState("");
     const [maximumNetRate,setMaximumNetRate] = useState("");
-    const [taxList,setTaxList]:any = useState<{itemTaxTemplate:string,taxCategory:string,validFrom:string,minimumNetRate:string,maximumNetRate:string} | any>(itemDetails[0].tax);
+    const [taxList,setTaxList]:any = useState<{itemTaxTemplate:string,taxCategory:string,validFrom:string,minimumNetRate:string,maximumNetRate:string} | any>(itemDetails.tax);
 
     const handleAddTaxClick=()=>{
         setIsAddTax(true);
@@ -166,18 +166,18 @@ export default function EditItem(){
             <div>
                 Details
                 <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="itemCode" defaultValue={itemDetails[0].ID} label="Item Code" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="itemName" defaultValue={itemDetails[0].name} label="Item Name" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="itemGroup" defaultValue={itemDetails[0].itemGroup} label="Item Group" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="itemCode" defaultValue={itemDetails.ID} label="Item Code" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="itemName" defaultValue={itemDetails.name} label="Item Name" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="itemGroup" defaultValue={itemDetails.itemGroup} label="Item Group" variant="faded" labelPlacement="outside"/>
                 </div>
                 <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="unitOfMeasure"  defaultValue={itemDetails[0].unitOfMeasure} label="Unit of Measure" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="openingStock"  defaultValue={itemDetails[0].openingStock} label="Opening Stock" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="valuationRate"  defaultValue={itemDetails[0].valuationRate} label="Valuation Rate" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="unitOfMeasure"  defaultValue={itemDetails.unitOfMeasure} label="Unit of Measure" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="openingStock"  defaultValue={itemDetails.openingStock} label="Opening Stock" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="valuationRate"  defaultValue={itemDetails.valuationRate} label="Valuation Rate" variant="faded" labelPlacement="outside" />
                 </div>
                 <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="standardSellingRate"  defaultValue={itemDetails[0].standardSellingRate} label="Standard Selling Rate" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="brandName"  defaultValue={itemDetails[0].brandName} label="Brand Name" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="standardSellingRate"  defaultValue={itemDetails.standardSellingRate} label="Standard Selling Rate" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="brandName"  defaultValue={itemDetails.brandName} label="Brand Name" variant="faded" labelPlacement="outside"/>
                 </div>
                 <div className="flex flex-row mt-8 gap-3">
                 <Textarea
@@ -190,7 +190,7 @@ export default function EditItem(){
                             label="Description"
                             variant="faded"
                             name="description"
-                            defaultValue={itemDetails[0].description}
+                            defaultValue={itemDetails.description}
                 />
                 </div>
             </div>
@@ -198,17 +198,17 @@ export default function EditItem(){
             <div className="flex flex-col pt-10">
                    Inventory
                    <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="shelfLifeInDays"  defaultValue={itemDetails[0].shelfLifeInDays} label="Shelf Life in Days" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="warrantyPeriod"  defaultValue={itemDetails[0].warrantyPeriod} label="Warranty Period" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="endOfLife"  defaultValue={itemDetails[0].endOfLife} label="End of Life" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="shelfLifeInDays"  defaultValue={itemDetails.shelfLifeInDays} label="Shelf Life in Days" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="warrantyPeriod"  defaultValue={itemDetails.warrantyPeriod} label="Warranty Period" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="endOfLife"  defaultValue={itemDetails.endOfLife} label="End of Life" variant="faded" labelPlacement="outside" />
                 </div>
                 <div className="flex flex-row mt-5 gap-3">
-                    <Input type="text" name="weightPerUnit"  defaultValue={itemDetails[0].weightPerUnit} label="Weight per Unit" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="defaultMaterialRequestType"  defaultValue={itemDetails[0].defaultMaterialRequestType} label="Default Material Request Type" variant="faded" labelPlacement="outside" />
-                    <Input type="text" name="weightUom"  defaultValue={itemDetails[0].weightUom} label="Weight UOM" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="weightPerUnit"  defaultValue={itemDetails.weightPerUnit} label="Weight per Unit" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="defaultMaterialRequestType"  defaultValue={itemDetails.defaultMaterialRequestType} label="Default Material Request Type" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="weightUom"  defaultValue={itemDetails.weightUom} label="Weight UOM" variant="faded" labelPlacement="outside" />
                 </div>
                 <div className="flex flex-row mt-5 gap-3">
-                    <Input type="text" name="valuation" label="Valuation"  defaultValue={itemDetails[0].valuation} variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="valuation" label="Valuation"  defaultValue={itemDetails.valuation} variant="faded" labelPlacement="outside" />
                 </div>
             </div>
             <div className="flex flex-col pt-10 mt-5">
@@ -356,9 +356,9 @@ export default function EditItem(){
             <div className="flex flex-col pt-10">
                    Purchasing
                    <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="defaultPurchaseUnitMeasure"  defaultValue={itemDetails[0].defaultPurchaseUnitOfMeasure} label="Default Purchase Unit of Measure" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="leadTimeInDays"  defaultValue={itemDetails[0].leadTimeInDays} label="Lead Time in Days" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="safetyStock"  defaultValue={itemDetails[0].safetyStock} label="Safety Stock" variant="faded" labelPlacement="outside" />
+                    <Input type="text" name="defaultPurchaseUnitMeasure"  defaultValue={itemDetails.defaultPurchaseUnitOfMeasure} label="Default Purchase Unit of Measure" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="leadTimeInDays"  defaultValue={itemDetails.leadTimeInDays} label="Lead Time in Days" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="safetyStock"  defaultValue={itemDetails.safetyStock} label="Safety Stock" variant="faded" labelPlacement="outside" />
                 </div>
             </div>
             <div className="flex flex-col pt-10 mt-5">
@@ -430,15 +430,15 @@ export default function EditItem(){
             <div className="flex flex-col pt-10">
                    Foreign Trade Details
                 <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="countryOfOrigin"  defaultValue={itemDetails[0].countryOfOrigin} label="Country of Origin" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="customsTariffNumber"  defaultValue={itemDetails[0].customsTariffNumber} label="Customs Tariff Number" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="countryOfOrigin"  defaultValue={itemDetails.countryOfOrigin} label="Country of Origin" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="customsTariffNumber"  defaultValue={itemDetails.customsTariffNumber} label="Customs Tariff Number" variant="faded" labelPlacement="outside"/>
                 </div>
             </div>
             <div className="flex flex-col pt-10">
                    Sales
                 <div className="flex flex-row mt-4 gap-3">
-                    <Input type="text" name="defaultSalesUnitMeasure"  defaultValue={itemDetails[0].defaultSalesUnitMeasure} label="Default Sales Unit of Measure" variant="faded" labelPlacement="outside"/>
-                    <Input type="text" name="maxDiscount" defaultValue={itemDetails[0].maxDiscount}  label="Max Discount" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="defaultSalesUnitMeasure"  defaultValue={itemDetails.defaultSalesUnitMeasure} label="Default Sales Unit of Measure" variant="faded" labelPlacement="outside"/>
+                    <Input type="text" name="maxDiscount" defaultValue={itemDetails.maxDiscount}  label="Max Discount" variant="faded" labelPlacement="outside"/>
                 </div>
             </div>
             <div className="flex flex-col pt-10 mt-5">
