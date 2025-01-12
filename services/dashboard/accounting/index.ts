@@ -1,9 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 
-
-
 const prisma = new PrismaClient();
-
 
 export async function fetchAccountTable(){
     try{
@@ -24,6 +21,9 @@ export async function createNewAccount(details:any){
                 accountName: details.accountName,
                 accountNumber: details.accountNumber,
                 accountType: details.accountType,
+                balance: details.balance,
+                currency: details.currency,
+                description: details.description,
                 status: "ACTIVE"
             }
         });
@@ -33,6 +33,49 @@ export async function createNewAccount(details:any){
     }
     return -1
 }
+
+export async function fetchAccountById(id:any){
+    try{
+        const  isAccountById = await prisma.account.findUnique({
+            where:{
+                id: id
+            }
+        })
+        if(isAccountById != null)
+            return isAccountById    
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export async function updateAccountById(details: any, id: string) {
+    try {
+        // Update the account in the database using the provided account ID
+        const updatedAccount = await prisma.account.update({
+            where: {
+                id: id,  // Use the provided account ID to find the account
+            },
+            data: {
+                accountName: details.accountName, // Account name
+                accountNumber: details.accountNumber, // Account number
+                accountType: details.accountType, // Account type
+                balance: details.balance, // Balance (convert to float if necessary)
+                currency: details.currency, // Currency
+                status: details.status, // Account status
+                parentAccountId: details.parentAccount || null, // Optional parent account
+                description: details.description || null, // Optional description
+                updatedAt: new Date(), // Set updated timestamp
+            },
+        });
+
+        // Return the updated account object (or any other information you need)
+        return updatedAccount;
+    } catch (error) {
+        console.log("Error updating account: ", error);
+        throw new Error("Error updating account");
+    }
+}
+
 
 export async function fetchSalesInvoiceTable(){
     try{

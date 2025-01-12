@@ -201,14 +201,30 @@ model Material {
 
 /////////////////////////////////// Account Schema //////////////////////////////////////
 
-model Account{
-  id              String @id @default(uuid())
-  accountId       String
+model Account {
+  id              String    @id @default(uuid())
+  accountId       String    @unique
   accountName     String
   accountNumber   String
-  accountType     String
+  accountType     AccountType
   status          Status
+  balance         String
+  currency        String
+  parentAccountId String?
+  // parentAccount   Account?  @relation("ParentAccount", fields: [parentAccountId], references: [id]) // Optional: Parent Account Relationship
+  description     String?   
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
+
+// Enum for Account Types
+enum AccountType {
+  ASSET
+  LIABILITY
+  INCOME
+  EXPENSE
+}
+
 
 model SalesInvoice{
   id              String @id @default(uuid())
