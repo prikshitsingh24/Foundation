@@ -53,10 +53,13 @@ export default function Buying(){
                    Material Requested
                 </div>
               </NavLink>
-                <div className={`text-sm rounded-xl cursor-pointer ${isPurchaseOrderSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
+              <NavLink to="purchaseOrder/table">
+              <div className={`text-sm rounded-xl cursor-pointer ${isPurchaseOrderSelected?'bg-btnBlack text-textWhite':''} hover:bg-btnBlack hover:text-white w-40 h-8 flex justify-center items-center mr-2`}
                                     onClick={handlePurchaseOrderClick}>
                     Purchase Order
                 </div>
+              </NavLink>
+                
             </div>
             {isItemSelected && (
                 <div className="flex flex-row gap-3">
@@ -114,7 +117,35 @@ export default function Buying(){
                 </div>
                </NavLink>
                 </div> 
-            )}                
+            )}
+            {isPurchaseOrderSelected && (
+                <div className="flex flex-row gap-3">
+                {selectedMaterialRequestedId.size===1?(
+                    <NavLink to={`materialRequested/editMaterialRequested/${String(Array.from(selectedMaterialRequestedId))}`}>
+                    <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                        <img src={editIcon} width={20}/>
+                    </div>
+                    </NavLink>
+                ):(
+                <div className="rounded-full w-8 text-blue-500 border-2 border-blue-500 h-8 cursor-pointer flex justify-evenly items-center">
+                    <img src={editIcon} width={20}/>
+                </div>
+                
+                )}
+                <Form method="post">
+                <input type="text" hidden value={id} name="userId" />
+                <input type="text" name="materialRequestedIds" hidden value={Array.from(selectedMaterialRequestedId)} />
+                <button name="_action" value="deleteMaterialRequest" className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                    <img src={deleteIcon} width={20}/>
+                </button>
+                </Form>
+               <NavLink to="purchaseOrder/addPurchaseOrder">
+               <div className="bg-btnBlack rounded-md text-bgWhite h-8 cursor-pointer flex justify-evenly items-center w-48" >
+                    <img src={addIcon} width={20}/> Add Purchase Order
+                </div>
+               </NavLink>
+                </div> 
+            )}                   
         </div>
         <Outlet/>
     </div>
