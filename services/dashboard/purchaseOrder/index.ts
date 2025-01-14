@@ -66,3 +66,33 @@ export async function createPurchaseOrder(data:any){
         throw new Error("Failed to create purchase order");
     }
 }
+
+
+
+export async function deletePurchaseOrderByIds(ids:string[]){
+    try{
+        const purchaseOrderDeleted = await prisma.$transaction(async(tx)=>{
+            await Promise.all([
+                tx.purchaseOrderItem.deleteMany({
+                    where:{
+                        purchaseOrderId:{
+                            in:ids
+                        }
+                    }
+                })
+            ])
+
+            const isPurchaseOrderDeleted = await tx.purchaseOrder.deleteMany({
+                where:{
+                    purchaseOrderId:{
+                        in:ids
+                    }
+                }
+            })
+            return isPurchaseOrderDeleted;
+        })
+        return purchaseOrderDeleted;
+    }catch(error){
+        console.error(error)
+    }
+}

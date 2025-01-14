@@ -10,6 +10,8 @@ import { userIdState } from "state/userState";
 import { selectedMaterialRequestedIdState } from "state/materialRequestedState";
 import { deleteMaterialRequiredByIds } from "services/dashboard/material";
 import { deleteRolesByItemIds } from "services/dashboard/item";
+import { deletePurchaseOrderByIds } from "services/dashboard/purchaseOrder";
+import { selectedPurchaseOrderIdState } from "state/purchaseOrderState";
 
 export default function Buying(){
     const [isItemSelected, setIsItemSelected] = React.useState(false);
@@ -17,6 +19,7 @@ export default function Buying(){
     const [isPurchaseOrderSelected, setIsPurchaseOrderSelected] = React.useState(false);
     const [selectedItemIds,setSelectedItemIds]:any = useRecoilState(selectedItemIdsState);
     const [selectedMaterialRequestedId,setSelectedMaterialRequestedId]:any = useRecoilState(selectedMaterialRequestedIdState);
+    const [selectedPurchaseOrderId,setSelecterPurchaseOrderId]:any = useRecoilState(selectedPurchaseOrderIdState);
     const [id,setUserId]:any = useRecoilState(userIdState);
 
     const handleItemsClick =()=>{
@@ -134,8 +137,8 @@ export default function Buying(){
                 )}
                 <Form method="post">
                 <input type="text" hidden value={id} name="userId" />
-                <input type="text" name="materialRequestedIds" hidden value={Array.from(selectedMaterialRequestedId)} />
-                <button name="_action" value="deleteMaterialRequest" className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
+                <input type="text" name="purchaseOrderIds" hidden value={Array.from(selectedPurchaseOrderId)} />
+                <button name="_action" value="deletePurchaseOrder" className="rounded-full w-8 text-red-500 border-2 border-red-500 h-8 cursor-pointer flex justify-evenly items-center">
                     <img src={deleteIcon} width={20}/>
                 </button>
                 </Form>
@@ -178,5 +181,17 @@ export async function action({request}:ActionFunctionArgs){
             return redirect("/dashboard/"+ids.userId+"/buying/materialRequested/table");
         }
         return redirect("/dashboard/"+ids.userId+"/buying/materialRequested/table");
+    }
+    if(_action==="deletePurchaseOrder"){
+        const itemIds = String(ids.purchaseOrderIds).split(',');
+        const isMaterialDeleted = await deletePurchaseOrderByIds(itemIds)
+        if(isMaterialDeleted){
+            return redirect("/dashboard/"+ids.userId+"/buying/purchaseOrder/table");
+        }
+        if(!isMaterialDeleted){
+            console.log("Error!! not able to delete entry");
+            return redirect("/dashboard/"+ids.userId+"/buying/purchaseOrder/table");
+        }
+        return redirect("/dashboard/"+ids.userId+"/buying/purchaseOrder/table");
     }
 }
