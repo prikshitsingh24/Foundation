@@ -195,7 +195,47 @@ model Material {
 }
 
 
+/////////////////////////////////// Purchase Order Schema //////////////////////////////////////
 
+model PurchaseOrder{
+  purchaseOrderId     String  @id @default(uuid())
+  series                    String
+  date                      String
+  company                   String
+  supplier                  String
+  requiredBy                String
+  costCenter                String
+  project                   String
+  currency                  String
+  setTargetWarehouse        String
+  taxCategory              String
+  shippingRule             String
+  incoterm                  String
+  applyAdditionalDiscountOn String
+  additionalDiscountPercentage String
+  additionalDiscountAmount String
+  supplierAddress           String
+  supplierContact           String
+  shippingAddress           String
+  terms                     String
+  description               String
+  purchaseOrderItem         PurchaseOrderItem[]
+}
+
+
+model PurchaseOrderItem{
+  itemId               String  @id  @default(uuid())
+  itemCode             String
+  itemName             String
+  requiredBy           String
+  expectedDeliveryDate String
+  quantity             String
+  rate                 String
+  amount               Int
+  purchaseOrderId      String
+
+  purchaseOrder       PurchaseOrder   @relation(fields: [purchaseOrderId], references: [purchaseOrderId])
+}
 
 
 

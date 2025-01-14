@@ -9,7 +9,6 @@ export default function PurchaseTable(){
 
     const [selectedPurchaseOrderId,setSelecterPurchaseOrderId]:any = useRecoilState(selectedPurchaseOrderIdState);
     const allPurchaseOrderData = useLoaderData<any>()
-
     return(
         <>
         <div className="mt-5 flex flex-row justify-between items-center">
@@ -40,19 +39,21 @@ export default function PurchaseTable(){
             <TableColumn>Status</TableColumn>
             </TableHeader>
             <TableBody>
-            {allPurchaseOrderData.map((purchaseOrder:any,index:number)=>(
+            {allPurchaseOrderData.map((purchaseOrder:any,index:number)=>{
+                const grandTotal = purchaseOrder.purchaseOrderItem.reduce((acc:number, item:any) => acc + item.amount, 0);
+                return (
                 <TableRow key={purchaseOrder.purchaseOrderId}>
-                    <TableCell>{purchaseOrder.supplierName}</TableCell>
-                    <TableCell>{purchaseOrder.dat}</TableCell>
-                    <TableCell>{purchaseOrder.grandTotal}</TableCell>
-                    <TableCell>{purchaseOrder.ID}</TableCell>
+                    <TableCell>{purchaseOrder.supplier}</TableCell>
+                    <TableCell>{purchaseOrder.date}</TableCell>
+                    <TableCell>{grandTotal}</TableCell>
+                    <TableCell>{purchaseOrder.series}</TableCell>
                     <TableCell>
                             <div className={`${purchaseOrder.status=="ACTIVE"?'bg-green-300':'bg-red-300'} rounded-lg p-1 w-16 flex justify-center items-center`}>
                                 {purchaseOrder.status?"Enabled":"Disabled"}
                             </div>
                         </TableCell>
                 </TableRow>
-            ))}
+            )})}
             </TableBody>
         </Table>
         </div>
